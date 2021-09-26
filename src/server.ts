@@ -23,7 +23,7 @@ class Server {
 
   public config(): void {
     // Settings
-    this.app.set("port", process.env.PORT || 3333);
+    // this.app.set("port", process.env.PORT || 3333);
     // middlewares
     // this.app.use(morgan("dev"));
     this.app.use(express.json());
@@ -42,7 +42,7 @@ class Server {
   }
 
   public start(): void {
-    this.app.listen(this.app.get("port"), () => {
+    this.app.listen(process.env.PORT || 3333, () => {
       console.log("Server is listenning on port", this.app.get("port"));
     });
   }
