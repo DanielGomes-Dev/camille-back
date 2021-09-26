@@ -6,7 +6,8 @@ import cors from "cors";
 
 import UserRouter from "./routes/UserRoutes";
 import UserController from "./controllers/UserController";
-
+import DatabaseConnect from "./database/config/DatabaseConnect";
+import DatabaseConfig from "./database/config/DatabaseConfig";
 // import routes
 // import indexRoutes from "./routes/indexRoutes";
 // import PostRouter from "./routes/PostRoutes";
@@ -19,6 +20,8 @@ class Server {
     this.app = express();
     this.config();
     this.routes();
+    const db = new DatabaseConnect(new DatabaseConfig()).dbConnect;
+    db.authenticate();
   }
 
   public config(): void {
