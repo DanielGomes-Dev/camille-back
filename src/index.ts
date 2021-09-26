@@ -1,10 +1,5 @@
-import express from "express";
-import cors from "cors";
-import routes from "./routes";
+import Server from "./server";
+// import './config/mongoose'
 
-const app = express();
-
-app.use(cors());
-app.use(routes);
-
-app.listen(3333);
+const server = new Server();
+server.start();
