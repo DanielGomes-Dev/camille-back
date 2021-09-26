@@ -1,27 +1,52 @@
 import { Request, Response } from "express";
-import EmailService from "../services/EmailService";
+// import EmailService from "../services/EmailService";
 
-const users = [{ name: "test", email: "test@test.com.br" }];
+export default class UserController {
+  async getUsers(req: Request, res: Response): Promise<void> {
+    const user = {
+      email: "test@test",
+      password: "test1234",
+    };
+    // const users = await User.find().populate("posts", "title url -_id");
+    res.json([user, user]);
+  }
 
-export default {
-  async index(req: Request, res: Response): Promise<Response> {
-    return res.json(users);
-  },
+  async getUser(req: Request, res: Response): Promise<void> {
+    const user = {
+      email: "test@test",
+      password: "test1234",
+    };
+    // const user = await User.findById(req.params.id).populate("posts");
+    res.json(user);
+  }
 
-  async create(req: Request, res: Response): Promise<Response> {
-    const emailService = new EmailService();
+  async createUser(req: Request, res: Response): Promise<void> {
+    const user = {
+      email: "test@test",
+      password: "test1234",
+    };
+    // const newUser = new User(req.body);
+    // await newUser.save();
+    res.json({ status: 200, user });
+  }
 
-    emailService.sendMail({
-      to: {
-        name: "teste teste",
-        email: "tes@test.com.br",
-      },
-      message: {
-        subject: "Bem-vindo ao sistema",
-        body: "Seja bem-vindo",
-      },
-    });
+  async updateUser(req: Request, res: Response): Promise<void> {
+    const user = {
+      email: "test@test",
+      password: "test1234",
+    };
+    const { id } = req.params;
+    // const user = await User.findByIdAndUpdate(id, req.body, { new: true });
+    res.json({ user, id });
+  }
 
-    return res.send();
-  },
-};
+  async deleteUser(req: Request, res: Response): Promise<void> {
+    const user = {
+      email: "test@test",
+      password: "test1234",
+    };
+    const { id } = req.params;
+    // const user = await User.findByIdAndRemove(id);
+    res.json({ user, id });
+  }
+}
