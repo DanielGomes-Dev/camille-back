@@ -1,10 +1,7 @@
-interface AddressInterface {
-  street: string;
-  number: number;
-  district: string;
-  city: string;
-  state: string;
-  cep: string;
+interface OpeningHoursInterface {
+  day: string;
+  opening_time: string;
+  closing_time: string;
 }
 
-export default AddressInterface;
+export default OpeningHoursInterface;

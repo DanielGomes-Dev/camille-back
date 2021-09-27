@@ -1,11 +1,11 @@
-import { Dialect, Options } from "sequelize/types";
-
-export default class DatabaseConfig implements Options {
+const DatabaseConfig = {
   // dialect: Dialect = "mysql";
-  dialect: Dialect = "sqlite";
-  host = "localhost";
+  dialect: "sqlite",
+  host: "localhost",
   // username = "root";
   // password = "root";
-  database = "camille_api";
-  storage = "./database.sqlite";
-}
+  database: "camille_api",
+  storage: "./database.sqlite",
+};
+
+module.exports = DatabaseConfig;

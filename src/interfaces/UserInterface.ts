@@ -1,8 +1,8 @@
 import ContactInterface from "./ContactInterface";
-import AddressInterface from "./OpeningHoursInterface";
+import AddressInterface from "./AddressInterface";
 
 interface userInterface {
-  login: string;
+  email: string;
   password: string;
   cpf: string;
   nome: string;
