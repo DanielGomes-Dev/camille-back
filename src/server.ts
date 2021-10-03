@@ -6,7 +6,6 @@ import cors from "cors";
 
 import UserRouter from "./routes/UserRoutes";
 import UserController from "./controllers/UserController";
-import DatabaseConnect from "./database/config/DatabaseConnect";
 
 // const configsDatabse = require("./database/config/DatabaseConfig");
 
@@ -24,9 +23,6 @@ class Server {
     this.app = express();
     this.config();
     this.routes();
-    const db = new DatabaseConnect(require("./database/config/DatabaseConfig"))
-      .dbConnect;
-    db.authenticate();
   }
 
   public config(): void {
