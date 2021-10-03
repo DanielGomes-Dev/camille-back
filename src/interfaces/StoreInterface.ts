@@ -1,4 +1,4 @@
-import OpeningHoursInterface from "./AddressInterface";
+import OpeningHoursInterface from "./OpeningHoursInterface";
 import AddressInterface from "./AddressInterface";
 import ContactInterface from "./ContactInterface";
 
