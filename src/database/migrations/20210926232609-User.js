@@ -23,7 +23,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      type: {
+      cpf: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      typeUserId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -33,7 +41,7 @@ module.exports = {
           key: "id",
         },
       },
-      contact: {
+      contactId: {
         allowNull: true,
         type: Sequelize.INTEGER,
         references: {
@@ -43,7 +51,7 @@ module.exports = {
           key: "id",
         },
       },
-      address: {
+      addressId: {
         allowNull: true,
         type: Sequelize.INTEGER,
         references: {
