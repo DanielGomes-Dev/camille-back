@@ -5,10 +5,10 @@ interface userInterface {
   email: string;
   password: string;
   cpf: string;
-  nome: string;
-  type: string;
-  contact: ContactInterface;
-  address: AddressInterface;
+  name: string;
+  typeUserId: string;
+  contactId?: ContactInterface;
+  addressId?: AddressInterface;
   status: string;
 }
 

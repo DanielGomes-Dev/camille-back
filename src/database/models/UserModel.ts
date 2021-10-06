@@ -12,9 +12,9 @@ export class User extends Model {
   private password!: string;
   private cpf!: string;
   private nome!: string;
-  private type!: string;
-  private contact!: number;
-  private address!: number;
+  private typeUserId!: string;
+  private contactId!: number;
+  private addressId!: number;
   private status!: string;
 }
 
@@ -25,9 +25,9 @@ User.init(
     password: { type: DataTypes.STRING },
     cpf: { type: DataTypes.STRING },
     name: { type: DataTypes.STRING },
-    // type: { type: DataTypes.STRING },
-    // contact: { type: DataTypes.INTEGER },
-    // address: { type: DataTypes.INTEGER },
+    typeUserId: { type: DataTypes.INTEGER },
+    contactId: { type: DataTypes.INTEGER },
+    addressId: { type: DataTypes.INTEGER },
     status: { type: DataTypes.STRING },
   },
   {
