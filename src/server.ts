@@ -5,7 +5,9 @@ import express from "express";
 import cors from "cors";
 
 import UserRouter from "./routes/UserRoutes";
-import UserController from "./controllers/UserController";
+
+// require("dotenv-safe").config();
+import env from "dotenv-safe";
 
 // const configsDatabse = require("./database/config/DatabaseConfig");
 
@@ -38,7 +40,7 @@ class Server {
   }
 
   public routes(): void {
-    new UserRouter(new UserController(), this.app);
+    new UserRouter(this.app);
     // const router: express.Router = express.Router();
     // this.app.use("/", indexRoutes);
     // this.app.use("/api/posts", PostRouter);
@@ -46,8 +48,9 @@ class Server {
   }
 
   public start(): void {
-    this.app.listen(process.env.PORT || 3333, () => {
-      console.log("Server is listenning on port", this.app.get("port"));
+    const port = env.config().parsed?.PORT || 3333;
+    this.app.listen(port, () => {
+      console.log("Server is listenning on port", port);
     });
   }
 }

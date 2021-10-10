@@ -4,7 +4,8 @@ import UserController from "../controllers/UserController";
 // import User from "../models/User";
 
 export default class UserRouter {
-  constructor(private userController: UserController, private router: Router) {
+  private userController = new UserController();
+  constructor(private router: Router) {
     // this.router.get("/user", this.userController.index);
     this.router.post("/user/login", this.userController.login);
     this.router.post("/user/register", this.userController.register);

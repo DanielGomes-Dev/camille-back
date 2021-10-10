@@ -7,15 +7,31 @@ import { TypesUser } from "./TypesUserModel";
 const dbConnect = new DatabaseConnect().dbConnect;
 
 export class User extends Model {
-  private id!: number;
-  private email!: string;
-  private password!: string;
-  private cpf!: string;
-  private nome!: string;
-  private typeUserId!: string;
-  private contactId!: number;
-  private addressId!: number;
-  private status!: string;
+  private _id!: number;
+  private _email!: string;
+  private _password!: string;
+  private _cpf!: string;
+  private _name!: string;
+  private _typeUserId!: string;
+  private _contactId!: number;
+  private _addressId!: number;
+  private _status!: string;
+
+  get id(): number {
+    return this._id;
+  }
+
+  get email(): string {
+    return this._email;
+  }
+
+  get cpf(): string {
+    return this._cpf;
+  }
+
+  get name(): string {
+    return this._name;
+  }
 }
 
 User.init(
