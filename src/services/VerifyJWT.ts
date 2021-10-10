@@ -1,12 +1,6 @@
 import jwt from "jsonwebtoken";
 import env from "dotenv-safe";
-
-interface jwtGenerate {
-  id: number;
-  email: string;
-  cpf: string;
-  name: string;
-}
+import jwtGenerate from "../interfaces/JwtInterface";
 
 interface tokenInterface {
   auth: boolean;
