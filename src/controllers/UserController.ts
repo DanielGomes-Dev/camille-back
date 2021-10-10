@@ -2,20 +2,20 @@ import { Request, Response } from "express";
 // import { apiErrorHandler } from "../handlers/errorHandler";
 import UserService from "../services/UserService";
 export default class UserController {
-  async index(
-    req: Request,
-    res: Response
-    // next: NextFunction
-  ): Promise<any> {
-    try {
-      const users = await UserService.showUsers();
-      return await res.json(users);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async index(
+  //   req: Request,
+  //   res: Response
+  //   // next: NextFunction
+  // ): Promise<any> {
+  //   try {
+  //     const users = await UserService.showUsers();
+  //     return await res.json(users);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  async store(
+  async register(
     req: Request,
     res: Response
     // next: NextFunction
@@ -34,10 +34,22 @@ export default class UserController {
         status: "active",
       };
 
-      console.log(newUserPayload);
-
       const users = await UserService.createUser(newUserPayload);
       return await res.json(users);
+    } catch (error) {
+      console.log(error);
+      return await res.json(error).status(400);
+    }
+  }
+
+  async login(req: Request, res: Response): Promise<any> {
+    try {
+      const login = {
+        email: req.body.email,
+        password: req.body.password,
+      };
+      const user = await UserService.login(login);
+      return await res.json(user);
     } catch (error) {
       console.log(error);
       return await res.json(error).status(400);
