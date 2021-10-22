@@ -8,7 +8,13 @@ export default class UserRouter {
   authVerify = new authVerify();
   private userController = new UserController();
   constructor(private router: Router) {
-    // this.router.get("/user", this.userController.index);
+    this.router.get("/users", this.userController.index);
+    this.router.get(
+      "/user",
+      this.authVerify.getUserByJwtToken,
+      this.userController.show
+    );
+
     this.router.post(
       "/user/login",
       this.authVerify.getUserByJwtToken,

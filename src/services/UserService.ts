@@ -16,9 +16,17 @@ interface userPayloadInterface {
 }
 
 class UserService {
-  // async showUsers() {
-  //   return await User.findAll();
-  // }
+  async showUserLogged(id: number) {
+    return await User.findByPk(id, {
+      attributes: ["id", "email", "cpf", "name"],
+    });
+  }
+
+  async showUsers() {
+    return await User.findAll({
+      attributes: ["id", "email", "cpf", "name"],
+    });
+  }
 
   jwt: JwtService = new JwtService();
 
@@ -30,6 +38,7 @@ class UserService {
   async login(user: userLogin): Promise<any> {
     const userLoged = await User.findOne({
       where: { email: user.email, password: user.password },
+      attributes: ["id", "email", "cpf", "name"],
     });
     if (!userLoged) throw "Usuario Não Encontrado";
     const userFormated: jwtGenerate = {

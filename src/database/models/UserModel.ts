@@ -2,6 +2,7 @@ import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { Address } from "./AdressModel";
 import { Contact } from "./ContactModel";
+import { StatusUser } from "./StatusUserModel";
 import { TypesUser } from "./TypesUserModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
@@ -44,7 +45,7 @@ User.init(
     typeUserId: { type: DataTypes.INTEGER },
     contactId: { type: DataTypes.INTEGER },
     addressId: { type: DataTypes.INTEGER },
-    status: { type: DataTypes.STRING },
+    statusId: { type: DataTypes.INTEGER },
   },
   {
     sequelize: dbConnect,
@@ -56,6 +57,9 @@ User.hasOne(Address, { foreignKey: "addressId", as: "address" });
 Address.belongsTo(User, { foreignKey: "addressId", as: "user" });
 
 User.hasOne(Contact, { foreignKey: "contactId", as: "contact" });
+
 Contact.belongsTo(User, { foreignKey: "contactId", as: "user" });
 
-User.hasOne(TypesUser, { foreignKey: "contactId", as: "types" });
+User.hasOne(TypesUser, { foreignKey: "typeUserId", as: "types" });
+
+User.hasOne(StatusUser, { foreignKey: "statusId", as: "status" });
