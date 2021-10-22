@@ -49,7 +49,7 @@ class Server {
 
   public start(): void {
     const port = env.config().parsed?.PORT;
-    this.app.listen(port || 3333, () => {
+    this.app.listen(process.env.PORT || port || 3333, () => {
       console.log("Server is listenning on port", port);
     });
   }
