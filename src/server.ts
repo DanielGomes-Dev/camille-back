@@ -48,8 +48,8 @@ class Server {
   }
 
   public start(): void {
-    const port = env.config().parsed?.PORT || 3333;
-    this.app.listen(port, () => {
+    const port = env.config().parsed?.PORT;
+    this.app.listen(port || 3333, () => {
       console.log("Server is listenning on port", port);
     });
   }
