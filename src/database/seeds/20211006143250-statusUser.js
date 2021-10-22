@@ -3,25 +3,15 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
-      "typesUser",
+      "statusUser",
       [
         {
-          type: "masterAdmin",
+          status: "active",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          type: "admin",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          type: "client",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          type: "deliveryman",
+          status: "inative",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -31,6 +21,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("typesUser", null, {});
+    await queryInterface.bulkDelete("statusUser", null, {});
   },
 };

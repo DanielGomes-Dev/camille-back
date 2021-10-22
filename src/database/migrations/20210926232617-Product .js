@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return await queryInterface.createTable("users", {
+    return await queryInterface.createTable("products", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -10,60 +10,56 @@ module.exports = {
         primaryKey: true,
         unique: true,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: false,
       },
-      cpf: {
+      code: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      statusId: {
+      photo: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: false,
+      },
+      stock: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        unique: false,
+      },
+      price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        default: true,
+      },
+      saleOff: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        default: false,
+      },
+      categoryProductId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "statusUser",
+            tableName: "productCategory",
           },
           key: "id",
         },
       },
-      typeUserId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "typesUser",
-          },
-          key: "id",
-        },
-      },
-      contactId: {
+      storeId: {
         allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "contacts",
-          },
-          key: "id",
-        },
-      },
-      addressId: {
-        allowNull: true,
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "address",
+            tableName: "stores",
           },
           key: "id",
         },
@@ -74,6 +70,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    return await queryInterface.dropTable("users");
+    return await queryInterface.dropTable("products");
   },
 };

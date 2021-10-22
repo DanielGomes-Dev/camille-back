@@ -10,7 +10,7 @@ interface userInterface {
   typeUserId: string;
   contactId?: ContactInterface;
   addressId?: AddressInterface;
-  status: string;
+  statusId: number;
 }
 
 export default userInterface;

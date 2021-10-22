@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return await queryInterface.createTable("users", {
+    return await queryInterface.createTable("stores", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -15,35 +15,40 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      cpf: {
+      companyName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      statusId: {
-        type: Sequelize.INTEGER,
+      fantasyName: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: {
-            tableName: "statusUser",
-          },
-          key: "id",
-        },
+        unique: true,
       },
-      typeUserId: {
+      owner: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true,
+      },
+      CNPJ: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      ie: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      note: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      categoryId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "typesUser",
+            tableName: "storeCategory",
           },
           key: "id",
         },
@@ -74,6 +79,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    return await queryInterface.dropTable("users");
+    return await queryInterface.dropTable("stores");
   },
 };
