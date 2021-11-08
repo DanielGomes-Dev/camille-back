@@ -9,6 +9,8 @@ class authVerify {
       if (!token) return res.status(401).json({ err: "no token provided" });
       const tokenJWT = token.split(" ")[1];
       const user = jwt.verify(tokenJWT);
+      //Fazer: Verificar se Usuario existe no banco de dados;
+      if (!user) throw "Usuario não encontrado";
       req.body.userLogged = user;
       next();
       return;

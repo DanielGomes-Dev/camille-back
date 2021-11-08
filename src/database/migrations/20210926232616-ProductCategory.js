@@ -15,11 +15,6 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      categoryStore: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE,
     });

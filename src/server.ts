@@ -4,10 +4,15 @@ import express from "express";
 // import compression from "compression";
 import cors from "cors";
 
-import UserRouter from "./routes/UserRoutes";
-
 // require("dotenv-safe").config();
 import env from "dotenv-safe";
+import UserRouter from "./routes/UserRoutes";
+import StoreRouter from "./routes/StoreRoutes";
+import StoreProductCategoryRouter from "./routes/StoreProductCategoryRoutes";
+
+import UserController from "./controllers/UserController";
+import StoreController from "./controllers/StoreController";
+import StoreProductCategoryController from "./controllers/StoreProductCategoryController";
 
 // const configsDatabse = require("./database/config/DatabaseConfig");
 
@@ -40,7 +45,14 @@ class Server {
   }
 
   public routes(): void {
-    new UserRouter(this.app);
+    new UserRouter(this.app, new UserController());
+    new StoreRouter(this.app, new StoreController());
+    new StoreRouter(this.app, new StoreController());
+    new StoreProductCategoryRouter(
+      this.app,
+      new StoreProductCategoryController()
+    );
+
     // const router: express.Router = express.Router();
     // this.app.use("/", indexRoutes);
     // this.app.use("/api/posts", PostRouter);

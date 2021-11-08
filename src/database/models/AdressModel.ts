@@ -3,7 +3,7 @@ import DatabaseConnect from "../config/DatabaseConnect";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
-export class Address extends Model {
+export class AddressModel extends Model {
   private id!: number;
   private street!: string;
   private number!: number;
@@ -13,7 +13,7 @@ export class Address extends Model {
   private cep!: string;
 }
 
-Address.init(
+AddressModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     street: { type: DataTypes.STRING },

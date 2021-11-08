@@ -1,16 +1,24 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
-import { ProductCategory } from "./ProductCategory";
-import { Store } from "./Store";
+import { ProductCategoryModel } from "./ProductCategoryModel";
+import { StoreModel } from "./StoreModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
-export class Product extends Model {
+export class ProductModel extends Model {
   private id!: number;
-  private status!: string;
+  private name!: string;
+  private code!: string;
+  private photo!: string;
+  private stock!: number;
+  private price!: number;
+  private active!: boolean;
+  private saleOff!: boolean;
+  private categoryProductId!: number;
+  private storeId!: number;
 }
 
-Product.init(
+ProductModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING },
@@ -20,8 +28,8 @@ Product.init(
     price: { type: DataTypes.FLOAT },
     active: { type: DataTypes.BOOLEAN },
     saleOff: { type: DataTypes.BOOLEAN },
-    // categoryProductId: { type: DataTypes.INTEGER },
-    // storeId: { type: DataTypes.INTEGER },
+    categoryProductId: { type: DataTypes.INTEGER },
+    storeId: { type: DataTypes.INTEGER },
   },
   {
     sequelize: dbConnect,
@@ -29,15 +37,21 @@ Product.init(
   }
 );
 
-Product.hasOne(ProductCategory, {
+ProductModel.hasOne(ProductCategoryModel, {
   constraints: true,
   foreignKey: "categoryProductId",
   as: "category",
 });
 
-Product.belongsTo(Store, {
-  constraints: true,
+ProductModel.belongsTo(StoreModel, {
+  // constraints: true,
   foreignKey: "storeId",
   as: "store",
+});
+
+StoreModel.hasMany(ProductModel, {
+  constraints: true,
+  foreignKey: "productId",
+  as: "products",
 });
 // Lesson.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
