@@ -3,13 +3,13 @@ import DatabaseConnect from "../config/DatabaseConnect";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
-export class Contact extends Model {
+export class ContactModel extends Model {
   private id!: number;
   private telefone!: string;
   // private email!: string;
 }
 
-Contact.init(
+ContactModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     telefone: { type: DataTypes.STRING },

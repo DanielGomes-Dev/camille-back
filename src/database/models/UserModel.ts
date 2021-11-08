@@ -1,13 +1,13 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
-import { Address } from "./AdressModel";
-import { Contact } from "./ContactModel";
-import { StatusUser } from "./StatusUserModel";
-import { TypesUser } from "./TypesUserModel";
+import { AddressModel } from "./AdressModel";
+import { ContactModel } from "./ContactModel";
+import { StatusUserModel } from "./StatusUserModel";
+import { TypesUserModel } from "./TypesUserModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
-export class User extends Model {
+export class UserModel extends Model {
   private _id!: number;
   private _email!: string;
   private _password!: string;
@@ -35,7 +35,7 @@ export class User extends Model {
   }
 }
 
-User.init(
+UserModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     email: { type: DataTypes.STRING },
@@ -53,13 +53,12 @@ User.init(
   }
 );
 
-User.hasOne(Address, { foreignKey: "addressId", as: "address" });
-Address.belongsTo(User, { foreignKey: "addressId", as: "user" });
+UserModel.belongsTo(AddressModel, { foreignKey: "addressId", as: "address" });
+AddressModel.hasOne(UserModel, { foreignKey: "addressId", as: "user" });
 
-User.hasOne(Contact, { foreignKey: "contactId", as: "contact" });
+UserModel.belongsTo(ContactModel, { foreignKey: "contactId", as: "contact" });
+ContactModel.hasOne(UserModel, { foreignKey: "contactId", as: "user" });
 
-Contact.belongsTo(User, { foreignKey: "contactId", as: "user" });
+UserModel.belongsTo(TypesUserModel, { foreignKey: "typeUserId", as: "types" });
 
-User.hasOne(TypesUser, { foreignKey: "typeUserId", as: "types" });
-
-User.hasOne(StatusUser, { foreignKey: "statusId", as: "status" });
+UserModel.belongsTo(StatusUserModel, { foreignKey: "statusId", as: "status" });

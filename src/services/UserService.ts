@@ -1,4 +1,4 @@
-import { User } from "../database/models/UserModel";
+import { UserModel } from "../database/models/UserModel";
 import jwtGenerate from "../interfaces/JwtInterface";
 import userInterface from "../interfaces/UserInterface";
 import JwtService from "./VerifyJWT";
@@ -17,13 +17,13 @@ interface userPayloadInterface {
 
 class UserService {
   async showUserLogged(id: number) {
-    return await User.findByPk(id, {
+    return await UserModel.findByPk(id, {
       attributes: ["id", "email", "cpf", "name"],
     });
   }
 
   async showUsers() {
-    return await User.findAll({
+    return await UserModel.findAll({
       attributes: ["id", "email", "cpf", "name"],
     });
   }
@@ -31,12 +31,12 @@ class UserService {
   jwt: JwtService = new JwtService();
 
   async createUser(user: userInterface) {
-    const newUser = await User.create(user);
+    const newUser = await UserModel.create(user);
     return newUser;
   }
 
   async login(user: userLogin): Promise<any> {
-    const userLoged = await User.findOne({
+    const userLoged = await UserModel.findOne({
       where: { email: user.email, password: user.password },
       attributes: ["id", "email", "cpf", "name"],
     });

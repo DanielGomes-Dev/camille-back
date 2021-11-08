@@ -3,12 +3,12 @@ import DatabaseConnect from "../config/DatabaseConnect";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
-export class TypesUser extends Model {
+export class TypesUserModel extends Model {
   private id!: number;
   private type!: string;
 }
 
-TypesUser.init(
+TypesUserModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     type: { type: DataTypes.STRING },

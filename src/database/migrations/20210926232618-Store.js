@@ -29,6 +29,12 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
+        references: {
+          model: {
+            tableName: "users",
+          },
+          key: "id",
+        },
       },
       CNPJ: {
         type: Sequelize.STRING,
