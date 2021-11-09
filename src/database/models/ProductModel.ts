@@ -37,21 +37,13 @@ ProductModel.init(
   }
 );
 
-ProductModel.hasOne(ProductCategoryModel, {
-  constraints: true,
+ProductModel.belongsTo(ProductCategoryModel, {
   foreignKey: "categoryProductId",
   as: "category",
 });
 
 ProductModel.belongsTo(StoreModel, {
-  // constraints: true,
   foreignKey: "storeId",
   as: "store",
-});
-
-StoreModel.hasMany(ProductModel, {
-  constraints: true,
-  foreignKey: "productId",
-  as: "products",
 });
 // Lesson.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
