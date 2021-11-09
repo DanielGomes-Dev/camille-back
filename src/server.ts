@@ -13,6 +13,8 @@ import StoreProductCategoryRouter from "./routes/StoreProductCategoryRoutes";
 import UserController from "./controllers/UserController";
 import StoreController from "./controllers/StoreController";
 import StoreProductCategoryController from "./controllers/StoreProductCategoryController";
+import ProductsRouter from "./routes/ProductsRoutes";
+import ProductController from "./controllers/ProductConttroller";
 
 // const configsDatabse = require("./database/config/DatabaseConfig");
 
@@ -52,6 +54,7 @@ class Server {
       this.app,
       new StoreProductCategoryController()
     );
+    new ProductsRouter(this.app, new ProductController());
 
     // const router: express.Router = express.Router();
     // this.app.use("/", indexRoutes);

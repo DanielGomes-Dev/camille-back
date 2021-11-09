@@ -1,19 +1,43 @@
+import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductModel } from "../database/models/ProductModel";
+import { StoreModel } from "../database/models/StoreModel";
 import ServiceInterface from "../interfaces/Project/ServiceInterface";
 
 class ProductService implements ServiceInterface {
   async index(id: number) {
-    return await ProductModel.findAll();
-  }
-  async show(id: number): Promise<any> {
-    //Implentar;
-    return {};
+    return await ProductModel.findAll({
+      where: { storeId: id },
+      include: [
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+        },
+      ],
+    });
   }
 
-  async create(store: any): Promise<any> {
+  async show(id: number): Promise<any> {
+    //Implentar;
+    return await ProductModel.findByPk(id, {
+      include: [
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+          attributes: ["id", "companyName", "fantasyName"],
+        },
+        {
+          model: ProductCategoryModel,
+          as: "category",
+          attributes: ["category"],
+        },
+      ],
+    });
+  }
+
+  async create(product: any): Promise<any> {
     ///Implentar
-    const newUser = await ProductModel.create(store);
-    return newUser;
+    const newProduct = await ProductModel.create(product);
+    return newProduct;
   }
   async edit(id: number, edited: any): Promise<any> {
     ///Implentar
