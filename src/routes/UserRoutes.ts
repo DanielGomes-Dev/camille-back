@@ -18,7 +18,7 @@ export default class UserRouter {
 
     this.router.post(
       "/user/login",
-      this.authVerify.getUserByJwtToken,
+      //this.authVerify.getUserByJwtToken,
       this.userController.show
     );
 
