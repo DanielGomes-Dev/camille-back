@@ -7,7 +7,7 @@ interface userInterface {
   password: string;
   cpf: string;
   name: string;
-  typeUserId: string;
+  typeUserId: number;
   contactId?: ContactInterface;
   addressId?: AddressInterface;
   statusId: number;

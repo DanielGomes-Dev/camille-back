@@ -4,7 +4,15 @@ import ServiceInterface from "../interfaces/Project/ServiceInterface";
 
 class StoreService implements ServiceInterface {
   async index() {
-    return await StoreModel.findAll();
+    return await StoreModel.findAll({
+      include: [
+        {
+          model: StoreCategoryModel,
+          as: "category", // <---- HERE,
+          attributes: ["id", "category"],
+        },
+      ],
+    });
   }
 
   async show(id: number): Promise<any> {

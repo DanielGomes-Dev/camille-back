@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return await queryInterface.createTable("stores", {
+    return await queryInterface.createTable("usersSeller", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -15,46 +15,25 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      companyName: {
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      cpf: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      fantasyName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      owner: {
+      statusId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
         references: {
           model: {
-            tableName: "usersSeller",
-          },
-          key: "id",
-        },
-      },
-      CNPJ: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      ie: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      note: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      categoryId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "storeCategory",
+            tableName: "statusUser",
           },
           key: "id",
         },
@@ -65,6 +44,16 @@ module.exports = {
         references: {
           model: {
             tableName: "contacts",
+          },
+          key: "id",
+        },
+      },
+      typeUserId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "typesUser",
           },
           key: "id",
         },
@@ -85,6 +74,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    return await queryInterface.dropTable("stores");
+    return await queryInterface.dropTable("usersSeller");
   },
 };

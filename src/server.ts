@@ -1,31 +1,20 @@
 import express from "express";
-// import morgan from "morgan";
-// import helmet from "helmet";
-// import compression from "compression";
 import cors from "cors";
-
-// require("dotenv-safe").config();
 import env from "dotenv-safe";
-import UserRouter from "./routes/UserRoutes";
+import UserBuyerRoutes from "./routes/UserBuyerRoutes";
 import StoreRouter from "./routes/StoreRoutes";
 import StoreProductCategoryRouter from "./routes/StoreProductCategoryRoutes";
 
-import UserController from "./controllers/UserController";
+import UserBuyerController from "./controllers/UserBuyerController";
 import StoreController from "./controllers/StoreController";
 import StoreProductCategoryController from "./controllers/StoreProductCategoryController";
 import ProductsRouter from "./routes/ProductsRoutes";
 import ProductController from "./controllers/ProductConttroller";
+import RequestRouter from "./routes/RequestRoute";
+import RequestController from "./controllers/RequestController";
+import UserSellerRoutes from "./routes/UserSellerRoutes";
+import UserSellerController from "./controllers/UserSellerController";
 
-// const configsDatabse = require("./database/config/DatabaseConfig");
-
-// import DatabaseConfig from "./database/config/DatabaseConfig";
-
-// import routes
-// import indexRoutes from "./routes/indexRoutes";
-// import PostRouter from "./routes/PostRoutes";
-// import UserRoutes from "./routes/UserRoutes";
-
-// Server Class
 class Server {
   private app: express.Application;
   constructor() {
@@ -35,19 +24,14 @@ class Server {
   }
 
   public config(): void {
-    // Settings
-    // this.app.set("port", process.env.PORT || 3333);
-    // middlewares
-    // this.app.use(morgan("dev"));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
-    // this.app.use(helmet());
-    // this.app.use(compression());
     this.app.use(cors());
   }
 
   public routes(): void {
-    new UserRouter(this.app, new UserController());
+    new UserBuyerRoutes(this.app, new UserBuyerController());
+    new UserSellerRoutes(this.app, new UserSellerController());
     new StoreRouter(this.app, new StoreController());
     new StoreRouter(this.app, new StoreController());
     new StoreProductCategoryRouter(
@@ -55,11 +39,7 @@ class Server {
       new StoreProductCategoryController()
     );
     new ProductsRouter(this.app, new ProductController());
-
-    // const router: express.Router = express.Router();
-    // this.app.use("/", indexRoutes);
-    // this.app.use("/api/posts", PostRouter);
-    // this.app.use("/api/users", UserRoutes);
+    new RequestRouter(this.app, new RequestController());
   }
 
   public start(): void {
