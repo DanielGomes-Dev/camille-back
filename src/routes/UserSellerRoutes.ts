@@ -4,26 +4,26 @@ import authVerify from "../middleware/authVerify";
 
 // import User from "../models/User";
 
-export default class UserRouter {
+export default class UserSellerRoutes {
   authVerify = new authVerify();
   constructor(
     private router: Router,
-    private userController: ControllerInterface
+    private userSellerController: ControllerInterface
   ) {
     this.router.get(
-      "/users",
+      "/usersSeller",
       this.authVerify.getUserByJwtToken,
-      this.userController.index
+      this.userSellerController.index
     );
 
     this.router.post(
-      "/user/login",
+      "/userSeller/login",
       //this.authVerify.getUserByJwtToken,
-      this.userController.show
+      this.userSellerController.show
     );
 
-    this.router.post("/user/register", userController.create);
-    // this.router.get("/user/:id", userController.getUser);
+    this.router.post("/userSeller/register", userSellerController.create);
+    // this.router.get("/user", userSellerController.show);
     // this.router.put("/user/:id", userController.updateUser);
     // this.router.delete("/user/:id", userController.deleteUser);
   }

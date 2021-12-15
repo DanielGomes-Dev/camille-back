@@ -3,4 +3,5 @@ export default interface jwtGenerate {
   email: string;
   cpf: string;
   name: string;
+  typeUser: string;
 }

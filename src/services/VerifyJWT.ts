@@ -15,7 +15,6 @@ export default class JwtService {
     const token = jwt.sign(user, this.SECRET, {
       //expiresIn: 300, // expires in 5min
     });
-    // console.log(token, "test");
     return { auth: true, token: token };
   }
   verify(token: string): any {

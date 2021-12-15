@@ -11,14 +11,15 @@ export default class StoreController implements ControllerInterface {
   async show(req: Request, res: Response): Promise<Response> {
     const id = Number(req.params.id);
     const store = await StoreService.show(id);
-    // const category = await store.getCategory();
-    // const subs = category.getStoreCategory();
-    // console.log(typeof store, "type");
-    // console.log(store);
     return res.json(store);
   }
 
   async create(req: Request, res: Response): Promise<Response> {
+    if (req.body.userLogged.typeUser != "admin")
+      return res
+        .status(401)
+        .json({ err: "Você não pode realizar essa operação" });
+
     const {
       email,
       companyName,

@@ -7,13 +7,14 @@ import { TypesUserModel } from "./TypesUserModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
-export class UserModel extends Model {
+export class UserSellerModel extends Model {
   private _id!: number;
   private _email!: string;
   private _password!: string;
   private _cpf!: string;
   private _name!: string;
-  private _typeUserId!: string;
+  public types!: any;
+  private _typeUserId!: number;
   private _contactId!: number;
   private _addressId!: number;
   private _status!: string;
@@ -33,9 +34,13 @@ export class UserModel extends Model {
   get name(): string {
     return this._name;
   }
+
+  get typeUserId(): number {
+    return this._typeUserId;
+  }
 }
 
-UserModel.init(
+UserSellerModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     email: { type: DataTypes.STRING },
@@ -49,16 +54,35 @@ UserModel.init(
   },
   {
     sequelize: dbConnect,
-    tableName: "users",
+    tableName: "usersSeller",
   }
 );
 
-UserModel.belongsTo(AddressModel, { foreignKey: "addressId", as: "address" });
-AddressModel.hasOne(UserModel, { foreignKey: "addressId", as: "user" });
+UserSellerModel.belongsTo(AddressModel, {
+  foreignKey: "addressId",
+  as: "address",
+});
+AddressModel.hasOne(UserSellerModel, {
+  foreignKey: "addressId",
+  as: "userSeller",
+});
 
-UserModel.belongsTo(ContactModel, { foreignKey: "contactId", as: "contact" });
-ContactModel.hasOne(UserModel, { foreignKey: "contactId", as: "user" });
+UserSellerModel.belongsTo(ContactModel, {
+  foreignKey: "contactId",
+  as: "contact",
+});
+ContactModel.hasOne(UserSellerModel, {
+  foreignKey: "contactId",
+  as: "userSeller",
+});
 
-UserModel.belongsTo(TypesUserModel, { foreignKey: "typeUserId", as: "types" });
+UserSellerModel.belongsTo(TypesUserModel, {
+  constraints: true,
+  foreignKey: "typeUserId",
+  as: "types",
+});
 
-UserModel.belongsTo(StatusUserModel, { foreignKey: "statusId", as: "status" });
+UserSellerModel.belongsTo(StatusUserModel, {
+  foreignKey: "statusId",
+  as: "status",
+});
