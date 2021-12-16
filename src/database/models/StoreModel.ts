@@ -3,8 +3,10 @@ import DatabaseConnect from "../config/DatabaseConnect";
 import { AddressModel } from "./AdressModel";
 import { ContactModel } from "./ContactModel";
 import { ProductCategoryModel } from "./ProductCategoryModel";
+import { StatusStoreModel } from "./StatusStoreModel";
 import { StoreCategoryModel } from "./StoreCategoryModel";
 import { StoreProductsCategoryModel } from "./StoreProductsCategoryModel";
+import { UserSellerModel } from "./UserSellerModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
@@ -13,7 +15,7 @@ export class StoreModel extends Model {
   private _email!: string;
   private _companyName!: string;
   private _fantasyName!: string;
-  private _owner!: string;
+  // private _owner!: number;
   private _CNPJ!: string;
   private _ie!: string;
   private _note!: string;
@@ -33,7 +35,7 @@ StoreModel.init(
     email: { type: DataTypes.STRING },
     companyName: { type: DataTypes.STRING },
     fantasyName: { type: DataTypes.STRING },
-    owner: { type: DataTypes.STRING },
+    // owner: { type: DataTypes.INTEGER },
     CNPJ: { type: DataTypes.STRING },
     ie: { type: DataTypes.STRING },
     note: { type: DataTypes.STRING },
@@ -64,6 +66,17 @@ StoreModel.belongsTo(StoreCategoryModel, {
   constraints: true,
   foreignKey: "categoryId",
   as: "category",
+});
+
+StoreModel.belongsTo(StatusStoreModel, {
+  foreignKey: "statusId",
+  as: "status",
+});
+
+StoreModel.belongsTo(UserSellerModel, {
+  constraints: true,
+  foreignKey: "ownerId",
+  as: "owner",
 });
 
 // Lesson.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });

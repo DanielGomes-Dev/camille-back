@@ -29,6 +29,21 @@ class StoreService implements ServiceInterface {
     return store;
   }
 
+  async showInfo(ownerId: number) {
+    const store = await StoreModel.findOne({
+      where: { ownerId: ownerId },
+      include: [
+        {
+          model: StoreCategoryModel,
+          as: "category", // <---- HERE,
+          attributes: ["id", "category"],
+        },
+      ],
+    });
+
+    return store;
+  }
+
   async create(store: any) {
     ///Implentar
     const newUser = await StoreModel.create(store);

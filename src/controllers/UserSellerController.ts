@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
+import StoreService from "../services/StoreService";
 // import { apiErrorHandler } from "../handlers/errorHandler";
 import UserSellerService from "../services/UserSellerService";
 export default class UserSellerController implements ControllerInterface {
@@ -33,12 +34,23 @@ export default class UserSellerController implements ControllerInterface {
         name: newUser.name,
         cpf: newUser.cpf,
         email: newUser.email,
-        password: newUser.password,
+        password: newUser.password, //Criptografar senha
         typeUserId: 2,
-        statusId: 1,
+        statusId: 1, //Fazer: validação de email
       };
 
       const user = await UserSellerService.createUser(newUserPayload);
+      const store = await StoreService.create({
+        email: null,
+        companyName: null,
+        fantasyName: null,
+        CNPJ: null,
+        ie: null,
+        note: null,
+        categoryId: null,
+        ownerId: user.id,
+        statusId: 3,
+      });
 
       return res.json(user).status(200);
     } catch (error: any) {

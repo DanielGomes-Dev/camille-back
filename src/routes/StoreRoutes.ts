@@ -6,10 +6,7 @@ import authVerify from "../middleware/authVerify";
 
 export default class StoreRouter {
   authVerify = new authVerify();
-  constructor(
-    private router: Router,
-    private storeController: ControllerInterface
-  ) {
+  constructor(private router: Router, private storeController: any) {
     this.router.get("/stores", this.storeController.index);
     this.router.get("/store/:id", this.storeController.show);
 
@@ -18,10 +15,16 @@ export default class StoreRouter {
     //   this.authVerify.getUserByJwtToken,
     //   this.userController.login
     // );
-    this.router.post(
-      "/store/register",
+    // this.router.post(
+    //   "/store/register",
+    //   this.authVerify.getUserByJwtToken,
+    //   this.storeController.create
+    // );
+
+    this.router.get(
+      "/store",
       this.authVerify.getUserByJwtToken,
-      this.storeController.create
+      this.storeController.getInformation
     );
     // this.router.get("/user/:id", this.userController.getUser);
     // this.router.put("/user/:id", this.userController.updateUser);
@@ -30,4 +33,4 @@ export default class StoreRouter {
 }
 
 // const userRouter = new UserRouter();
-// export default userRouter.router;
+// export default userRouter.router; getInformation

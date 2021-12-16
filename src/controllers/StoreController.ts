@@ -14,44 +14,19 @@ export default class StoreController implements ControllerInterface {
     return res.json(store);
   }
 
-  async create(req: Request, res: Response): Promise<Response> {
-    if (req.body.userLogged.typeUser != "admin")
-      return res
-        .status(401)
-        .json({ err: "Você não pode realizar essa operação" });
+  create(req: Request, res: Response): Promise<Response> {
+    return Promise.resolve(res.json({}));
+  }
 
-    const {
-      email,
-      companyName,
-      fantasyName,
-      // owner,
-      CNPJ,
-      ie,
-      note,
-      categoryId,
-      contactId,
-      addressId,
-    } = req.body;
-
-    const store = {
-      email,
-      companyName,
-      fantasyName,
-      owner: req.body.userLogged.id,
-      CNPJ,
-      ie,
-      note,
-      categoryId,
-      contactId,
-      addressId,
-    };
-
+  async getInformation(req: Request, res: Response): Promise<Response> {
     try {
-      const newStore = await StoreService.create(store);
-      return res.status(201).json(newStore);
-    } catch (err: any) {
-      console.log(err);
-      return res.status(400).json({ err: err.errors[0].message });
+      const owner = req.body.userLogged;
+      console.log(owner);
+      const store = await StoreService.showInfo(Number(owner.id));
+      return res.json(store);
+    } catch (e) {
+      console.log(e);
+      return res.status(401).json({});
     }
   }
 
