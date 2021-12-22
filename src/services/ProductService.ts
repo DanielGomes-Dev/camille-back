@@ -10,6 +10,12 @@ class ProductService {
         {
           model: StoreModel,
           as: "store", // <---- HERE,
+          attributes: ["id", "companyName", "fantasyName"],
+        },
+        {
+          model: ProductCategoryModel,
+          as: "category",
+          attributes: ["category"],
         },
       ],
     });
@@ -25,6 +31,11 @@ class ProductService {
     return await ProductModel.findAll({
       where: { storeId: storeId.id },
       include: [
+        {
+          model: ProductCategoryModel,
+          as: "category",
+          attributes: ["category"],
+        },
         {
           model: StoreModel,
           as: "store", // <---- HERE,
