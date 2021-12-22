@@ -12,7 +12,7 @@ module.exports = {
       },
       number: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         // unique: true,
       },
       createdAt: Sequelize.DATE,

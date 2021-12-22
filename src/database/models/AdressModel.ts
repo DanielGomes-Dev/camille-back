@@ -20,7 +20,6 @@ AddressModel.init(
     number: { type: DataTypes.INTEGER },
     district: { type: DataTypes.STRING },
     city: { type: DataTypes.STRING },
-    type: { type: DataTypes.STRING },
     state: { type: DataTypes.STRING },
     cep: { type: DataTypes.STRING },
   },

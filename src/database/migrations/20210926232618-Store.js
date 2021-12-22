@@ -70,7 +70,7 @@ module.exports = {
         },
       },
       contactId: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -80,7 +80,7 @@ module.exports = {
         },
       },
       addressId: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
