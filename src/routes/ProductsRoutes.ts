@@ -29,7 +29,11 @@ export default class ProductsRouter {
       this.authVerify.getUserByJwtToken,
       productController.edit
     );
-    // this.router.delete("/user/:id", userController.deleteUser);
+    this.router.delete(
+      "/product/:id",
+      this.authVerify.getUserByJwtToken,
+      productController.delete
+    );
   }
 }
 

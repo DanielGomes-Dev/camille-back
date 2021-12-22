@@ -1,7 +1,6 @@
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductModel } from "../database/models/ProductModel";
 import { StoreModel } from "../database/models/StoreModel";
-import ServiceInterface from "../interfaces/Project/ServiceInterface";
 
 class ProductService {
   async index(id: number) {
@@ -80,10 +79,23 @@ class ProductService {
     return await product.update(edited);
   }
 
-  // delete(id: number): Promise<any> {
-  //   ///Implentar
-  //   return {};
-  // }
+  async delete(id: number, ownerId: number): Promise<any> {
+    const product: any = await ProductModel.findOne({
+      where: { id: id },
+      include: [
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+          attributes: ["ownerId"],
+        },
+      ],
+    });
+    if (!product) throw new Error("Produto Não existe");
+    if (product.store.ownerId !== ownerId)
+      throw new Error("Você não tem permisão para deletar esse produto");
+    product.destroy();
+    return true;
+  }
 }
 
 export default new ProductService();

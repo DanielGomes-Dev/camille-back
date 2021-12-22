@@ -82,6 +82,14 @@ export default class ProductController {
   }
 
   async delete(req: Request, res: Response): Promise<Response> {
-    return res.json({});
+    try {
+      const productId = Number(req.params.id);
+      const ownerId = req.body.userLogged.id;
+      const deletedUser = await ProductService.delete(productId, ownerId);
+      return res.status(200).json(deletedUser);
+    } catch (e: any) {
+      console.log(e);
+      return res.status(401).json({ err: e.message });
+    }
   }
 }
