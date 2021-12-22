@@ -58,15 +58,25 @@ export default class StoreController implements ControllerInterface {
       state: req.body.address.state,
       cep: req.body.address.cep,
     };
-    const storeEdit = await StoreService.edit(user.id, store);
-    const addressEdit = await AddressService.edit(storeEdit.addressId, address);
-    const contactEdit = await ContactService.edit(storeEdit.contactId, contact);
+    try {
+      const storeEdit = await StoreService.edit(user.id, store);
+      const addressEdit = await AddressService.edit(
+        storeEdit.addressId,
+        address
+      );
+      const contactEdit = await ContactService.edit(
+        storeEdit.contactId,
+        contact
+      );
 
-    return res.status(200).json({
-      store: storeEdit,
-      address: addressEdit,
-      contact: contactEdit,
-    });
+      return res.status(200).json({
+        store: storeEdit,
+        address: addressEdit,
+        contact: contactEdit,
+      });
+    } catch (e: any) {
+      return res.status(400).json({ err: e.message });
+    }
   }
   //Criar rota para atualizar o status da loja
 

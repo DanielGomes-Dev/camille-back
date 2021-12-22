@@ -3,10 +3,28 @@ import { ProductModel } from "../database/models/ProductModel";
 import { StoreModel } from "../database/models/StoreModel";
 import ServiceInterface from "../interfaces/Project/ServiceInterface";
 
-class ProductService implements ServiceInterface {
+class ProductService {
   async index(id: number) {
     return await ProductModel.findAll({
       where: { storeId: id },
+      include: [
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+        },
+      ],
+    });
+  }
+
+  async index_by_token(id: number) {
+    const storeId = await StoreModel.findOne({
+      where: { ownerId: id },
+    });
+
+    if (!storeId) throw new Error("Nenhum Usuario Encontrado");
+
+    return await ProductModel.findAll({
+      where: { storeId: storeId.id },
       include: [
         {
           model: StoreModel,
@@ -34,8 +52,15 @@ class ProductService implements ServiceInterface {
     });
   }
 
-  async create(product: any): Promise<any> {
+  async create(product: any, ownerId: number): Promise<any> {
     ///Implentar
+    const store = await StoreModel.findOne({
+      where: {
+        ownerId: ownerId,
+      },
+    });
+    if (!store) throw new Error("Nenhum Usuario Encontrado");
+    product.storeId = store.id;
     const newProduct = await ProductModel.create(product);
     return newProduct;
   }
