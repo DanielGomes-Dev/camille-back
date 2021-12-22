@@ -53,7 +53,6 @@ class ProductService {
   }
 
   async create(product: any, ownerId: number): Promise<any> {
-    ///Implentar
     const store = await StoreModel.findOne({
       where: {
         ownerId: ownerId,
@@ -64,14 +63,27 @@ class ProductService {
     const newProduct = await ProductModel.create(product);
     return newProduct;
   }
-  async edit(id: number, edited: any): Promise<any> {
-    ///Implentar
-    return {};
+  async edit(edited: any, ownerId: number): Promise<any> {
+    const product: any = await ProductModel.findOne({
+      where: { id: edited.id },
+      include: [
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+          attributes: ["ownerId"],
+        },
+      ],
+    });
+    if (!product) throw new Error("Produto Não existe");
+    if (product.store.ownerId !== ownerId)
+      throw new Error("Você não tem permisão para editar esse produto");
+    return await product.update(edited);
   }
-  async delete(id: number): Promise<any> {
-    ///Implentar
-    return {};
-  }
+
+  // delete(id: number): Promise<any> {
+  //   ///Implentar
+  //   return {};
+  // }
 }
 
 export default new ProductService();

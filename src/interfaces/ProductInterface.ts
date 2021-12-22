@@ -1,4 +1,5 @@
 interface ProductInterface {
+  id?: number;
   name: string;
   code: string;
   photo: string;

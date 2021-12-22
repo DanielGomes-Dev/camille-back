@@ -59,7 +59,26 @@ export default class ProductController {
   }
 
   async edit(req: Request, res: Response): Promise<Response> {
-    return res.json({});
+    try {
+      const product: any = {
+        id: req.body.id,
+        name: req.body.name,
+        code: req.body.code,
+        photo: req.body.photo,
+        stock: req.body.stock,
+        price: req.body.price,
+        active: req.body.active,
+        saleOff: req.body.saleOff,
+        categoryProductId: req.body.categoryProductId,
+      };
+      const ownerId = req.body.userLogged.id;
+      const productEdit = await ProductService.edit(product, ownerId);
+
+      return res.status(200).json(productEdit);
+    } catch (e: any) {
+      console.log(e);
+      return res.status(400).json({ err: e.message });
+    }
   }
 
   async delete(req: Request, res: Response): Promise<Response> {
