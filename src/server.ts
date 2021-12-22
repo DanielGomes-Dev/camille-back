@@ -14,6 +14,8 @@ import RequestRouter from "./routes/RequestRoute";
 import RequestController from "./controllers/RequestController";
 import UserSellerRoutes from "./routes/UserSellerRoutes";
 import UserSellerController from "./controllers/UserSellerController";
+import StoreCategoryRouter from "./routes/StoreCategoryRoutes";
+import StoreCategoryController from "./controllers/StoreCategoryController";
 
 class Server {
   private app: express.Application;
@@ -40,6 +42,7 @@ class Server {
     );
     new ProductsRouter(this.app, new ProductController());
     new RequestRouter(this.app, new RequestController());
+    new StoreCategoryRouter(this.app, new StoreCategoryController());
   }
 
   public start(): void {

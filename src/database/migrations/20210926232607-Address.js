@@ -5,39 +5,39 @@ module.exports = {
     return await queryInterface.createTable("address", {
       id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         autoIncrement: true,
         primaryKey: true,
         unique: true,
       },
       number: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         // unique: true,
       },
       street: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         // unique: true,
       },
       district: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         // unique: true,
       },
       city: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         // unique: true,
       },
       state: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         // unique: true,
       },
       cep: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         // unique: true,
       },
       createdAt: Sequelize.DATE,

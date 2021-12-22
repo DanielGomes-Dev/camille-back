@@ -5,14 +5,14 @@ const dbConnect = new DatabaseConnect().dbConnect;
 
 export class ContactModel extends Model {
   private id!: number;
-  private telefone!: string;
+  private number!: string;
   // private email!: string;
 }
 
 ContactModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    telefone: { type: DataTypes.STRING },
+    number: { type: DataTypes.STRING },
     // email: { type: DataTypes.STRING },
   },
   {

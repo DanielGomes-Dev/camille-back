@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
+import AddressService from "../services/AddressService";
+import ContactService from "../services/ContactService";
 import StoreService from "../services/StoreService";
 // import { apiErrorHandler } from "../handlers/errorHandler";
 import UserSellerService from "../services/UserSellerService";
@@ -40,6 +42,20 @@ export default class UserSellerController implements ControllerInterface {
       };
 
       const user = await UserSellerService.createUser(newUserPayload);
+
+      const address = await AddressService.create({
+        number: null,
+        street: null,
+        district: null,
+        city: null,
+        state: null,
+        cep: null,
+      });
+
+      const contact = await ContactService.create({
+        number: null,
+      });
+
       const store = await StoreService.create({
         email: null,
         companyName: null,
@@ -50,6 +66,8 @@ export default class UserSellerController implements ControllerInterface {
         categoryId: null,
         ownerId: user.id,
         statusId: 3,
+        addressId: address.id,
+        contactId: contact.id,
       });
 
       return res.json(user).status(200);
