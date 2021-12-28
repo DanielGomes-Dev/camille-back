@@ -8,6 +8,7 @@ const dbConnect = new DatabaseConnect().dbConnect;
 export class ProductModel extends Model {
   private id!: number;
   private name!: string;
+  private description!: string;
   private code!: string;
   private photo!: string;
   private stock!: number;
@@ -22,6 +23,7 @@ ProductModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING },
+    description: { type: DataTypes.STRING },
     code: { type: DataTypes.STRING },
     photo: { type: DataTypes.STRING },
     stock: { type: DataTypes.INTEGER },

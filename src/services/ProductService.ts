@@ -41,6 +41,10 @@ class ProductService {
           as: "store", // <---- HERE,
         },
       ],
+      order: [
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ["createdAt", "DESC"],
+      ],
     });
   }
 

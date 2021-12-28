@@ -37,6 +37,7 @@ export default class ProductController {
   async create(req: Request, res: Response): Promise<Response> {
     const product: ProductInterface = {
       name: req.body.name,
+      description: req.body.description,
       code: req.body.code,
       photo: req.body.photo,
       stock: req.body.stock,
@@ -63,6 +64,7 @@ export default class ProductController {
       const product: any = {
         id: req.body.id,
         name: req.body.name,
+        description: req.body.description,
         code: req.body.code,
         photo: req.body.photo,
         stock: req.body.stock,
