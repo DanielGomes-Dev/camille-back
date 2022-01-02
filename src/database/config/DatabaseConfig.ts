@@ -3,7 +3,7 @@ const env = require("dotenv-safe");
 
 const DatabaseConfig = {
   // dialect: Dialect = "mysql";
-  dialect: "mysql",
+  dialect: env.config().parsed?.DB_DIALECT,
   host: "localhost",
   username: env.config().parsed?.DB_USER,
   password: env.config().parsed?.DB_PASSWORD,
