@@ -2,13 +2,13 @@
 const env = require("dotenv-safe");
 
 const DatabaseConfig = {
-  // dialect: Dialect = "mysql";
-  dialect: env.config().parsed?.DB_DIALECT,
+  dialect: "sqlite",
+  // dialect: env.config().parsed?.DB_DIALECT,
   host: "localhost",
-  username: env.config().parsed?.DB_USER,
-  password: env.config().parsed?.DB_PASSWORD,
+  // username: env.config().parsed?.DB_USER,
+  // password: env.config().parsed?.DB_PASSWORD,
   database: "camille_api",
-  // storage: "./database.sqlite",
+  storage: "./database.sqlite",
 };
 
 module.exports = DatabaseConfig;
