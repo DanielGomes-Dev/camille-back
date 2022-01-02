@@ -18,5 +18,11 @@
         "titleBar.inactiveBackground": "#21573299",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#215732"
+    "peacock.color": "#215732",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/1a1de791-51e3-48d9-b635-7ebe80f41f57/resourceGroups/NodeJs-TypeScript-SQL/providers/Microsoft.Web/sites/camille-backend-stage",
+    "appService.deploySubpath": "."
 }
