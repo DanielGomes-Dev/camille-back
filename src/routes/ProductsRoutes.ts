@@ -1,6 +1,7 @@
 import { Router } from "express";
 import ProductController from "../controllers/ProductConttroller";
 import authVerify from "../middleware/authVerify";
+import uploadAzure from "../uploadAzure";
 
 // import User from "../models/User";
 
@@ -14,8 +15,18 @@ export default class ProductsRouter {
     this.router.post(
       "/product",
       this.authVerify.getUserByJwtToken,
+      uploadAzure.single("photo"),
       productController.create
     );
+
+    //Cadastrar Imagens
+    // this.router.post(
+    //   "/product/img",
+    //   this.authVerify.getUserByJwtToken,
+    //   uploadAzure.single("photo"),
+    //   productController.createImg
+    // );
+
     this.router.get("/product/:id", productController.show);
 
     //Buscar Produtos para listagem do dono da loja

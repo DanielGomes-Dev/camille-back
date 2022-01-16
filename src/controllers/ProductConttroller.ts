@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import ProductInterface from "../interfaces/ProductInterface";
 // import { apiErrorHandler } from "../handlers/errorHandler";
 import ProductService from "../services/ProductService";
-import StoreService from "../services/StoreService";
 
 export default class ProductController {
   index(req: Request, res: Response): Promise<Response> {
@@ -35,11 +34,13 @@ export default class ProductController {
   }
 
   async create(req: Request, res: Response): Promise<Response> {
+    const img: any = req.file;
+
     const product: ProductInterface = {
       name: req.body.name,
       description: req.body.description,
       code: req.body.code,
-      photo: req.body.photo,
+      photo: img.url,
       stock: req.body.stock,
       price: req.body.price,
       active: true,
@@ -59,14 +60,24 @@ export default class ProductController {
     }
   }
 
+  async createImg(req: any, res: Response) {
+    try {
+      console.log(req.file);
+      return res.send(req.file);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async edit(req: Request, res: Response): Promise<Response> {
     try {
+      const img: any = req.file;
       const product: any = {
         id: req.body.id,
         name: req.body.name,
         description: req.body.description,
         code: req.body.code,
-        photo: req.body.photo,
+        photo: img.url,
         stock: req.body.stock,
         price: req.body.price,
         active: req.body.active,
