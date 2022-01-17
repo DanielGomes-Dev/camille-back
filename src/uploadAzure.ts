@@ -15,7 +15,7 @@ const azureStorage: MulterAzureStorage = new MulterAzureStorage({
   accountName: "camilleimgstorage",
   containerName: "camilleimages",
   containerAccessLevel: "blob",
-  urlExpirationTime: -1,
+  urlExpirationTime: 0,
   blobName: resolveBlobName,
 });
 

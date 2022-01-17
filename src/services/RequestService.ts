@@ -1,7 +1,5 @@
-import { StoreCategoryModel } from "../database/models/StoreCategoryModel";
 import { RequestModel } from "../database/models/RequestModel";
 import ServiceInterface from "../interfaces/Project/ServiceInterface";
-import RequestInterface from "../interfaces/RequestInterface";
 import { StoreModel } from "../database/models/StoreModel";
 
 class RequestService implements ServiceInterface {

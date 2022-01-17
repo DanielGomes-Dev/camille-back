@@ -15,7 +15,7 @@ export default class ProductController {
 
   async index_by_token(req: Request, res: Response): Promise<Response> {
     try {
-      const userId = req.body.userLogged.id;
+      const userId = Number(req.params.userLoggedId);
       console.log(userId);
       const productListByStoreAndOwner = await ProductService.index_by_token(
         userId
@@ -35,24 +35,23 @@ export default class ProductController {
 
   async create(req: Request, res: Response): Promise<Response> {
     const img: any = req.file;
-
-    const product: ProductInterface = {
-      name: req.body.name,
-      description: req.body.description,
-      code: req.body.code,
+    const product = JSON.parse(req.body.product);
+    const productPayload: ProductInterface = {
+      name: product.name,
+      description: product.description,
+      code: product.code,
       photo: img.url,
-      stock: req.body.stock,
-      price: req.body.price,
+      stock: product.stock,
+      price: product.price,
       active: true,
-      saleOff: req.body.saleOff,
-      categoryProductId: req.body.categoryProductId,
+      saleOff: product.saleOff,
+      categoryProductId: product.categoryProductId,
       storeId: 0,
     };
-
-    const ownerId = req.body.userLogged.id;
+    const ownerId = Number(req.params.userLoggedId);
 
     try {
-      const newProduct = await ProductService.create(product, ownerId);
+      const newProduct = await ProductService.create(productPayload, ownerId);
       return res.status(201).json(newProduct);
     } catch (err: any) {
       console.log(err);
@@ -62,7 +61,7 @@ export default class ProductController {
 
   async createImg(req: any, res: Response) {
     try {
-      console.log(req.file);
+      const product = JSON.parse(req.body.product);
       return res.send(req.file);
     } catch (e) {
       console.log(e);
@@ -84,7 +83,7 @@ export default class ProductController {
         saleOff: req.body.saleOff,
         categoryProductId: req.body.categoryProductId,
       };
-      const ownerId = req.body.userLogged.id;
+      const ownerId = Number(req.params.userLoggedId);
       const productEdit = await ProductService.edit(product, ownerId);
 
       return res.status(200).json(productEdit);
@@ -97,7 +96,7 @@ export default class ProductController {
   async delete(req: Request, res: Response): Promise<Response> {
     try {
       const productId = Number(req.params.id);
-      const ownerId = req.body.userLogged.id;
+      const ownerId = Number(req.params.userLoggedId);
       const deletedUser = await ProductService.delete(productId, ownerId);
       return res.status(200).json(deletedUser);
     } catch (e: any) {

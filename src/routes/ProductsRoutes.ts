@@ -19,13 +19,13 @@ export default class ProductsRouter {
       productController.create
     );
 
-    //Cadastrar Imagens
-    // this.router.post(
-    //   "/product/img",
-    //   this.authVerify.getUserByJwtToken,
-    //   uploadAzure.single("photo"),
-    //   productController.createImg
-    // );
+    // Cadastrar Imagens
+    this.router.post(
+      "/product/img",
+      this.authVerify.getUserByJwtToken,
+      uploadAzure.single("photo"),
+      productController.createImg
+    );
 
     this.router.get("/product/:id", productController.show);
 

@@ -6,8 +6,7 @@ import RequestService from "../services/RequestService";
 export default class RequestController implements ControllerInterface {
   async index(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.body.userLogged.id;
-      console.log(req.body.userLogged);
+      const id = Number(req.params.userLoggedId);
       const request: RequestInterface[] = await RequestService.index(id);
       return res.json(request);
     } catch (e) {
@@ -17,7 +16,7 @@ export default class RequestController implements ControllerInterface {
   }
 
   async show(req: Request, res: Response): Promise<Response> {
-    const storeOwnerId = req.body.userLogged.id;
+    const storeOwnerId = Number(req.params.userLoggedId);
     const requestId = Number(req.params.id);
     const request: RequestInterface = await RequestService.show({
       storeOwnerId,
@@ -32,7 +31,7 @@ export default class RequestController implements ControllerInterface {
         addressId: req.body.addressId,
         productId: req.body.productId,
         storeId: req.body.storeId,
-        userId: req.body.userLogged.id,
+        userId: Number(req.params.userLoggedId),
         statusId: 1,
       };
 

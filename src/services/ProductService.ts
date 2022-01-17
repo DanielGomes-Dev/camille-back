@@ -77,6 +77,7 @@ class ProductService {
     const newProduct = await ProductModel.create(product);
     return newProduct;
   }
+
   async edit(edited: any, ownerId: number): Promise<any> {
     const product: any = await ProductModel.findOne({
       where: { id: edited.id },

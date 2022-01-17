@@ -22,9 +22,8 @@ export default class StoreController implements ControllerInterface {
 
   async getInformation(req: Request, res: Response): Promise<Response> {
     try {
-      const owner = req.body.userLogged;
-      console.log(owner);
-      const store = await StoreService.showInfo(Number(owner.id));
+      const owner = Number(req.params.userLoggedId);
+      const store = await StoreService.showInfo(Number(owner));
       return res.json(store);
     } catch (e) {
       console.log(e);
@@ -33,7 +32,7 @@ export default class StoreController implements ControllerInterface {
   }
 
   async edit(req: Request, res: Response): Promise<Response> {
-    const user = req.body.userLogged;
+    const user = Number(req.params.userLoggedId);
     if (!user) return res.status(401).json({});
 
     const store = {
@@ -59,7 +58,7 @@ export default class StoreController implements ControllerInterface {
       cep: req.body.address.cep,
     };
     try {
-      const storeEdit = await StoreService.edit(user.id, store);
+      const storeEdit = await StoreService.edit(user, store);
       const addressEdit = await AddressService.edit(
         storeEdit.addressId,
         address
