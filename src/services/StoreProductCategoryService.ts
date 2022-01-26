@@ -22,7 +22,7 @@ class StoreProductCategoryService implements ServiceInterface {
       const categoryProduct = await ProductCategoryModel.findByPk(
         sub.categoryProductId,
         {
-          attributes: ["category"],
+          attributes: ["id", "category"],
         }
       );
       if (!categoryProduct) throw new Error("Falha ao Encontrar Categoria");

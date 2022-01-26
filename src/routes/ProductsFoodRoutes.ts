@@ -1,25 +1,29 @@
 import { Router } from "express";
-import ProductController from "../controllers/ProductConttroller";
+import ProductFoodConttroller from "../controllers/ProductFoodConttroller";
 import authVerify from "../middleware/authVerify";
 import uploadAzure from "../uploadAzure";
 
 // import User from "../models/User";
 
-export default class ProductsRouter {
+export default class ProductsFoodRouter {
   authVerify = new authVerify();
   constructor(
     private router: Router,
-    private productController: ProductController
+    private productFoodConttroller: ProductFoodConttroller
   ) {
-    this.router.get("/products/:id", productController.index_by_store_id);
-    this.router.post(
-      "/product",
-      this.authVerify.getUserByJwtToken,
-      uploadAzure.single("photo"),
-      productController.create
+    this.router.get(
+      "/productsfood/:id",
+      this.productFoodConttroller.index_by_store_id
     );
 
-    // Cadastrar Imagens
+    this.router.post(
+      "/productfood",
+      this.authVerify.getUserByJwtToken,
+      uploadAzure.single("photo"),
+      this.productFoodConttroller.create
+    );
+
+    // // Cadastrar Imagens
     // this.router.post(
     //   "/product/img",
     //   this.authVerify.getUserByJwtToken,
@@ -27,24 +31,24 @@ export default class ProductsRouter {
     //   productController.createImg
     // );
 
-    this.router.get("/product/:id", productController.show);
+    this.router.get("/productfood/:id", this.productFoodConttroller.show);
 
     //Buscar Produtos para listagem do dono da loja
     this.router.get(
-      "/products",
+      "/productsfood",
       this.authVerify.getUserByJwtToken,
-      productController.index_by_token
+      this.productFoodConttroller.index_by_token
     );
     this.router.put(
-      "/product",
+      "/productsfood",
       this.authVerify.getUserByJwtToken,
       uploadAzure.single("photo"),
-      productController.edit
+      this.productFoodConttroller.edit
     );
     this.router.delete(
-      "/product/:id",
+      "/productsfood/:id",
       this.authVerify.getUserByJwtToken,
-      productController.delete
+      this.productFoodConttroller.delete
     );
   }
 }

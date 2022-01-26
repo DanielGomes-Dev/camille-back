@@ -16,6 +16,8 @@ import UserSellerRoutes from "./routes/UserSellerRoutes";
 import UserSellerController from "./controllers/UserSellerController";
 import StoreCategoryRouter from "./routes/StoreCategoryRoutes";
 import StoreCategoryController from "./controllers/StoreCategoryController";
+import ProductsFoodRouter from "./routes/ProductsFoodRoutes";
+import ProductFoodConttroller from "./controllers/ProductFoodConttroller";
 
 class Server {
   private app: express.Application;
@@ -43,6 +45,7 @@ class Server {
     new ProductsRouter(this.app, new ProductController());
     new RequestRouter(this.app, new RequestController());
     new StoreCategoryRouter(this.app, new StoreCategoryController());
+    new ProductsFoodRouter(this.app, new ProductFoodConttroller());
   }
 
   public start(): void {
