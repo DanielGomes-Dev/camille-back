@@ -64,7 +64,7 @@ class StoreService implements ServiceInterface {
     const store = await StoreModel.findOne({
       where: { ownerId: id },
     });
-    if (!store) throw new Error("store not founf");
+    if (!store) throw new Error("store not found");
     const storeToEdit = await store.update(edited);
 
     return storeToEdit;

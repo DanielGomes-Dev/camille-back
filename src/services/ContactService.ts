@@ -43,7 +43,7 @@ class ContactService implements ServiceInterface {
     const contact = await ContactModel.findOne({
       where: { id: id },
     });
-    if (!contact) throw new Error("contact not founf");
+    if (!contact) throw new Error("contact not found");
     const contactToEdit = await contact.update(edited);
 
     return contactToEdit;

@@ -32,30 +32,39 @@ export default class StoreController implements ControllerInterface {
   }
 
   async edit(req: Request, res: Response): Promise<Response> {
+    const img: any = req.files;
+    const storeBody = JSON.parse(req.body.store);
+
+    console.log(img, storeBody);
+
     const user = Number(req.params.userLoggedId);
     if (!user) return res.status(401).json({});
 
     const store = {
-      email: req.body.email,
-      companyName: req.body.companyName,
-      fantasyName: req.body.fantasyName,
-      CNPJ: req.body.CNPJ,
-      ie: req.body.ie,
-      note: req.body.note,
-      categoryId: req.body.categoryId,
+      email: storeBody.email,
+      photo: img["logo"][0].url,
+      banner: img["banner"][0].url,
+      companyName: storeBody.companyName,
+      fantasyName: storeBody.fantasyName,
+      CNPJ: storeBody.CNPJ,
+      ie: storeBody.ie,
+      note: storeBody.note,
+      categoryId: storeBody.categoryId,
     };
 
+    console.log(store);
+
     const contact = {
-      number: req.body.contact.number,
+      number: storeBody.contact.number,
     };
 
     const address = {
-      number: req.body.address.number,
-      street: req.body.address.street,
-      district: req.body.address.district,
-      city: req.body.address.city,
-      state: req.body.address.state,
-      cep: req.body.address.cep,
+      number: storeBody.address.number,
+      street: storeBody.address.street,
+      district: storeBody.address.district,
+      city: storeBody.address.city,
+      state: storeBody.address.state,
+      cep: storeBody.address.cep,
     };
     try {
       const storeEdit = await StoreService.edit(user, store);

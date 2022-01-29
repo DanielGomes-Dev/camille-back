@@ -10,6 +10,16 @@ module.exports = {
         primaryKey: true,
         unique: true,
       },
+      photo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true,
+      },
+      banner: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true,
+      },
       email: {
         type: Sequelize.STRING,
         allowNull: true,

@@ -2,16 +2,16 @@ import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { AddressModel } from "./AdressModel";
 import { ContactModel } from "./ContactModel";
-import { ProductCategoryModel } from "./ProductCategoryModel";
 import { StatusStoreModel } from "./StatusStoreModel";
 import { StoreCategoryModel } from "./StoreCategoryModel";
-import { StoreProductsCategoryModel } from "./StoreProductsCategoryModel";
 import { UserSellerModel } from "./UserSellerModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
 export class StoreModel extends Model {
   private _id!: number;
+  private _photo!: string;
+  private _banner!: string;
   private _email!: string;
   private _companyName!: string;
   private _fantasyName!: string;
@@ -32,6 +32,8 @@ export class StoreModel extends Model {
 StoreModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    photo: { type: DataTypes.STRING },
+    banner: { type: DataTypes.STRING },
     email: { type: DataTypes.STRING },
     companyName: { type: DataTypes.STRING },
     fantasyName: { type: DataTypes.STRING },

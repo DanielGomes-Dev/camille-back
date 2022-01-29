@@ -42,7 +42,7 @@ class AddressService implements ServiceInterface {
     const address = await AddressModel.findOne({
       where: { id: id },
     });
-    if (!address) throw new Error("address not founf");
+    if (!address) throw new Error("address not found");
     const addressToEdit = await address.update(edited);
 
     return addressToEdit;

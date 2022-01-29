@@ -1,6 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
-import { ProductCategoryModel } from "./ProductCategoryModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 

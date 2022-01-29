@@ -1,11 +1,16 @@
 import { Router } from "express";
+import StoreController from "../controllers/StoreController";
 import authVerify from "../middleware/authVerify";
+import uploadAzure from "../uploadAzure";
 
 // import User from "../models/User";
 
 export default class StoreRouter {
   authVerify = new authVerify();
-  constructor(private router: Router, private storeController: any) {
+  constructor(
+    private router: Router,
+    private storeController: StoreController
+  ) {
     this.router.get("/stores", this.storeController.index);
     this.router.get("/store/:id", this.storeController.show); // remover cpnj e informações a mais
 
@@ -29,6 +34,7 @@ export default class StoreRouter {
     this.router.put(
       "/store",
       this.authVerify.getUserByJwtToken,
+      uploadAzure.fields([{ name: "logo" }, { name: "banner" }]),
       this.storeController.edit
     );
     // this.router.delete("/user/:id", this.userController.deleteUser);
