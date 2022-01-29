@@ -34,7 +34,7 @@ export default class StoreRouter {
     this.router.put(
       "/store",
       this.authVerify.getUserByJwtToken,
-      uploadAzure.fields([{ name: "logo" }, { name: "banner" }]),
+      uploadAzure.fields([{ name: "photo" }, { name: "banner" }]),
       this.storeController.edit
     );
     // this.router.delete("/user/:id", this.userController.deleteUser);
