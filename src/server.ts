@@ -3,11 +3,11 @@ import cors from "cors";
 import env from "dotenv-safe";
 import UserBuyerRoutes from "./routes/UserBuyerRoutes";
 import StoreRouter from "./routes/StoreRoutes";
-import StoreProductCategoryRouter from "./routes/StoreProductCategoryRoutes";
+// import StoreProductCategoryRouter from "./routes/StoreProductCategoryRoutes";
 
 import UserBuyerController from "./controllers/UserBuyerController";
 import StoreController from "./controllers/StoreController";
-import StoreProductCategoryController from "./controllers/StoreProductCategoryController";
+// import StoreProductCategoryController from "./controllers/StoreProductCategoryController";
 import ProductsRouter from "./routes/ProductsRoutes";
 import ProductController from "./controllers/ProductConttroller";
 import RequestRouter from "./routes/RequestRoute";
@@ -18,6 +18,10 @@ import StoreCategoryRouter from "./routes/StoreCategoryRoutes";
 import StoreCategoryController from "./controllers/StoreCategoryController";
 import ProductsFoodRouter from "./routes/ProductsFoodRoutes";
 import ProductFoodConttroller from "./controllers/ProductFoodConttroller";
+import ProductCategoryRouter from "./routes/ProductCategoryRoutes";
+import ProductCategoryController from "./controllers/ProductCategoryController";
+import TypeProductRouter from "./routes/TypeProductRoutes";
+import TypeProductController from "./controllers/TypeProductController";
 
 class Server {
   private app: express.Application;
@@ -38,14 +42,16 @@ class Server {
     new UserSellerRoutes(this.app, new UserSellerController());
     new StoreRouter(this.app, new StoreController());
     new StoreRouter(this.app, new StoreController());
-    new StoreProductCategoryRouter(
-      this.app,
-      new StoreProductCategoryController()
-    );
+    // new StoreProductCategoryRouter(
+    //   this.app,
+    //   new StoreProductCategoryController()
+    // );
     new ProductsRouter(this.app, new ProductController());
     new RequestRouter(this.app, new RequestController());
     new StoreCategoryRouter(this.app, new StoreCategoryController());
     new ProductsFoodRouter(this.app, new ProductFoodConttroller());
+    new ProductCategoryRouter(this.app, new ProductCategoryController());
+    new TypeProductRouter(this.app, new TypeProductController());
   }
 
   public start(): void {

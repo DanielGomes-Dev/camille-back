@@ -1,7 +1,5 @@
-import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductModel } from "../database/models/ProductModel";
 import { StoreCategoryModel } from "../database/models/StoreCategoryModel";
-import { StoreProductsCategoryModel } from "../database/models/StoreProductsCategoryModel";
 import ServiceInterface from "../interfaces/Project/ServiceInterface";
 
 class StoreCategoryService implements ServiceInterface {

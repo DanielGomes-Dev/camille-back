@@ -1,19 +1,22 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
-import { StoreCategoryModel } from "./StoreCategoryModel";
+import { TypeProductModel } from "./TypeProductModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
 export class ProductCategoryModel extends Model {
   private _id!: number;
   private _category!: string;
+  private _iconUrl!: string;
+  private _typeProduct!: number;
 }
 
 ProductCategoryModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     category: { type: DataTypes.STRING },
-    // categoryStoreId: { type: DataTypes.INTEGER },
+    iconUrl: { type: DataTypes.STRING },
+    typeProduct: { type: DataTypes.INTEGER },
   },
   {
     sequelize: dbConnect,
@@ -21,8 +24,7 @@ ProductCategoryModel.init(
   }
 );
 
-// ProductCategoryModel.hasOne(StoreCategoryModel, {
-// foreignKey: "categoryStoreId",
-// as: "categoryStore",
-// });
-// Lesson.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
+ProductCategoryModel.belongsTo(TypeProductModel, {
+  foreignKey: "typeProduct",
+  as: "type",
+});

@@ -5,6 +5,7 @@ import ContactService from "../services/ContactService";
 import StoreService from "../services/StoreService";
 // import { apiErrorHandler } from "../handlers/errorHandler";
 import UserSellerService from "../services/UserSellerService";
+import PassCrypto from "../utils/passCrypto";
 export default class UserSellerController implements ControllerInterface {
   async index(req: Request, res: Response): Promise<Response> {
     const users = await UserSellerService.showUsers();
@@ -15,7 +16,7 @@ export default class UserSellerController implements ControllerInterface {
     try {
       const login = {
         email: req.body.email,
-        password: req.body.password,
+        password: PassCrypto.encrypt(req.body.password),
       };
       const user = await UserSellerService.login(login);
       if (!user) throw "Login Invalido";
@@ -32,11 +33,12 @@ export default class UserSellerController implements ControllerInterface {
       if (!(newUser.password === newUser.confirmPassword)) {
         throw { message: "password be equal" };
       }
+
       const newUserPayload = {
         name: newUser.name,
         cpf: newUser.cpf,
         email: newUser.email,
-        password: newUser.password, //Criptografar senha
+        password: PassCrypto.encrypt(newUser.password),
         typeUserId: 2,
         statusId: 1, //Fazer: validação de email
       };

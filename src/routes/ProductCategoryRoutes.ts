@@ -1,17 +1,22 @@
 import { Router } from "express";
+import ProductCategoryController from "../controllers/ProductCategoryController";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import authVerify from "../middleware/authVerify";
 
 // import User from "../models/User";
 
-export default class StoreCategoryRouter {
+export default class ProductCategoryRouter {
   authVerify = new authVerify();
   constructor(
     private router: Router,
-    private storeCategoryController: ControllerInterface
+    private productCategoryController: ProductCategoryController
   ) {
     // this.router.get("/storesCategory", this.storeController.index);
-    this.router.get("/storeCategory", this.storeCategoryController.index);
+    this.router.get("/productCategory", this.productCategoryController.index);
+    this.router.get(
+      "/productCategory/:id",
+      this.productCategoryController.show
+    );
 
     // this.router.post(
     //   "/user/login",

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 // import { apiErrorHandler } from "../handlers/errorHandler";
 import UserBuyerService from "../services/UserBuyerService";
+import PassCrypto from "../utils/passCrypto";
 export default class UserBuyerController implements ControllerInterface {
   async index(req: Request, res: Response): Promise<Response> {
     const users = await UserBuyerService.showUsers();
@@ -12,7 +13,7 @@ export default class UserBuyerController implements ControllerInterface {
     try {
       const login = {
         email: req.body.email,
-        password: req.body.password,
+        password: PassCrypto.encrypt(req.body.password),
       };
       const user = await UserBuyerService.login(login);
       if (!user) throw "Login Invalido";
@@ -33,7 +34,7 @@ export default class UserBuyerController implements ControllerInterface {
         name: newUser.name,
         cpf: newUser.cpf,
         email: newUser.email,
-        password: newUser.password,
+        password: PassCrypto.encrypt(newUser.password),
         typeUserId: 3,
         statusId: 1,
       };

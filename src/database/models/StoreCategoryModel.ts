@@ -1,14 +1,13 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { ProductCategoryModel } from "./ProductCategoryModel";
-import { StoreProductsCategoryModel } from "./StoreProductsCategoryModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
 export class StoreCategoryModel extends Model {
   private _id!: number;
   private _category!: string;
-  private _subCategory!: ProductCategoryModel[];
+  private _iconUrl!: ProductCategoryModel[];
 
   get id(): number {
     return this._id;
@@ -22,6 +21,7 @@ StoreCategoryModel.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     category: { type: DataTypes.STRING },
+    iconUrl: { type: DataTypes.STRING },
   },
   {
     sequelize: dbConnect,

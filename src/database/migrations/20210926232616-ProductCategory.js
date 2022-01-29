@@ -13,7 +13,23 @@ module.exports = {
       category: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
+      },
+      iconUrl: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: false,
+      },
+      typeProduct: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: false,
+        references: {
+          model: {
+            tableName: "typeProduct",
+          },
+          key: "id",
+        },
       },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE,
