@@ -1,4 +1,4 @@
-import { Model, DataTypes } from "sequelize";
+import { Model, DataTypes, BOOLEAN } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { AddressModel } from "./AdressModel";
 import { ContactModel } from "./ContactModel";
@@ -35,6 +35,7 @@ StoreModel.init(
     photo: { type: DataTypes.STRING },
     banner: { type: DataTypes.STRING },
     email: { type: DataTypes.STRING },
+    active: { type: DataTypes.BOOLEAN },
     companyName: { type: DataTypes.STRING },
     fantasyName: { type: DataTypes.STRING },
     // owner: { type: DataTypes.INTEGER },
@@ -44,9 +45,6 @@ StoreModel.init(
     categoryId: { type: DataTypes.INTEGER },
     contactId: { type: DataTypes.INTEGER },
     addressId: { type: DataTypes.INTEGER },
-
-    // contactId: { type: DataTypes.STRING },
-    // addressId: { type: DataTypes.STRING },
   },
   {
     sequelize: dbConnect,

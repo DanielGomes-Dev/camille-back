@@ -50,9 +50,8 @@ export default class StoreController implements ControllerInterface {
       ie: storeBody.ie,
       note: storeBody.note,
       categoryId: storeBody.categoryId,
+      active: true,
     };
-
-    console.log(store);
 
     const contact = {
       number: storeBody.contact.number,

@@ -35,6 +35,11 @@ module.exports = {
         allowNull: true,
         unique: true,
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        default: false,
+      },
       ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,

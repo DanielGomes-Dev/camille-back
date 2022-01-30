@@ -40,7 +40,7 @@ module.exports = {
         default: true,
       },
       saleOff: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.INTEGER,
         allowNull: false,
         default: false,
       },
