@@ -66,6 +66,7 @@ export default class UserSellerController implements ControllerInterface {
         ie: null,
         note: null,
         categoryId: null,
+        active: false,
         ownerId: user.id,
         statusId: 3,
         addressId: address.id,
