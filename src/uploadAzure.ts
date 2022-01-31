@@ -7,13 +7,25 @@ const resolveBlobName: MASNameResolver = (): Promise<string> => {
     resolve(blobName);
   });
 };
+// const azureStorage: MulterAzureStorage = new MulterAzureStorage({
+//   connectionString:
+//     "DefaultEndpointsProtocol=https;AccountName=camilleimgstorage;AccountKey=bBoriiKVWOIEuOG3o4xqU2il3tg7rEWJDE6TcXVljyP7E5a6lzfWdCDPnMfnEkDsEuZUWcqujKlZV0UK4h3Erg==;EndpointSuffix=core.windows.net",
+//   accessKey:
+//     "bBoriiKVWOIEuOG3o4xqU2il3tg7rEWJDE6TcXVljyP7E5a6lzfWdCDPnMfnEkDsEuZUWcqujKlZV0UK4h3Erg==",
+//   accountName: "camilleimgstorage",
+//   containerName: "camilleimages",
+//   containerAccessLevel: "blob",
+//   urlExpirationTime: 0,
+//   blobName: resolveBlobName,
+// });
+
 const azureStorage: MulterAzureStorage = new MulterAzureStorage({
   connectionString:
-    "DefaultEndpointsProtocol=https;AccountName=camilleimgstorage;AccountKey=bBoriiKVWOIEuOG3o4xqU2il3tg7rEWJDE6TcXVljyP7E5a6lzfWdCDPnMfnEkDsEuZUWcqujKlZV0UK4h3Erg==;EndpointSuffix=core.windows.net",
+    "DefaultEndpointsProtocol=https;AccountName=weupstorage;AccountKey=Psb/IcihJyNno2iLUWttai/9ujP2R5SNzOo6KPGYrlHBCVv8dbPxfvbhIX+igk2gIxL/GKVFaoK766+xmjdUYw==;EndpointSuffix=core.windows.net",
   accessKey:
-    "bBoriiKVWOIEuOG3o4xqU2il3tg7rEWJDE6TcXVljyP7E5a6lzfWdCDPnMfnEkDsEuZUWcqujKlZV0UK4h3Erg==",
-  accountName: "camilleimgstorage",
-  containerName: "camilleimages",
+    "Psb/IcihJyNno2iLUWttai/9ujP2R5SNzOo6KPGYrlHBCVv8dbPxfvbhIX+igk2gIxL/GKVFaoK766+xmjdUYw==",
+  accountName: "weupstorage",
+  containerName: "weupstoragecontainer",
   containerAccessLevel: "blob",
   urlExpirationTime: 0,
   blobName: resolveBlobName,
