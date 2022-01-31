@@ -15,7 +15,6 @@ class ProductService {
         {
           model: ProductCategoryModel,
           as: "category",
-          attributes: ["category"],
         },
       ],
     });
@@ -34,7 +33,6 @@ class ProductService {
         {
           model: ProductCategoryModel,
           as: "category",
-          attributes: ["category"],
         },
         {
           model: StoreModel,

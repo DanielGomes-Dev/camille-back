@@ -19,22 +19,12 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
-      active: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        default: true,
-      },
-      saleOff: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        default: false,
-      },
       productId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "products",
+            tableName: "productsFood",
           },
           key: "id",
         },

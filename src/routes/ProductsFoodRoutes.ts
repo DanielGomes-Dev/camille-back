@@ -16,6 +16,11 @@ export default class ProductsFoodRouter {
       this.productFoodConttroller.index_by_store_id
     );
 
+    this.router.get(
+      "/productfoodplus/:productId",
+      this.productFoodConttroller.index_complements_by_product_id
+    );
+
     this.router.post(
       "/productfood",
       this.authVerify.getUserByJwtToken,
@@ -49,6 +54,12 @@ export default class ProductsFoodRouter {
       "/productsfood/:id",
       this.authVerify.getUserByJwtToken,
       this.productFoodConttroller.delete
+    );
+
+    this.router.delete(
+      "/productsfoodplus/:id",
+      this.authVerify.getUserByJwtToken,
+      this.productFoodConttroller.delete_complement_by_id
     );
   }
 }

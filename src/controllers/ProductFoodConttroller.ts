@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import ProductFoodPlusService from "../services/ProductFoodPlusService";
 import ProductFoodService from "../services/ProductFoodService";
 // import { apiErrorHandler } from "../handlers/errorHandler";
 
@@ -15,10 +16,24 @@ export default class ProductFoodConttroller {
   async index_by_token(req: Request, res: Response): Promise<Response> {
     try {
       const userId = Number(req.params.userLoggedId);
-      console.log(userId);
       const productListByStoreAndOwner =
         await ProductFoodService.index_by_token(userId);
       return res.status(200).json(productListByStoreAndOwner);
+    } catch (e: any) {
+      console.log(e.message);
+      return res.status(401).json({ err: e.message });
+    }
+  }
+
+  async index_complements_by_product_id(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    try {
+      const productId = Number(req.params.productId);
+      const complementsProduct =
+        await ProductFoodPlusService.index_by_product_id(productId);
+      return res.status(200).json(complementsProduct);
     } catch (e: any) {
       console.log(e.message);
       return res.status(401).json({ err: e.message });
@@ -52,6 +67,14 @@ export default class ProductFoodConttroller {
         productPayload,
         ownerId
       );
+
+      for (const complemets of product.complements) {
+        await ProductFoodPlusService.insert_plus_in_food({
+          ...complemets,
+          productId: newProduct.id,
+          storeId: newProduct.storeId,
+        });
+      }
       return res.status(201).json(newProduct);
     } catch (err: any) {
       console.log(err);
@@ -85,7 +108,18 @@ export default class ProductFoodConttroller {
         categoryProductId: productJson.categoryProductId,
       };
       const ownerId = Number(req.params.userLoggedId);
+      console.log(productJson);
       const productEdit = await ProductFoodService.edit(product, ownerId);
+
+      for (const complemets of productJson.complements) {
+        if (!complemets.id) {
+          await ProductFoodPlusService.insert_plus_in_food({
+            ...complemets,
+            productId: productEdit.id,
+            storeId: productEdit.storeId,
+          });
+        }
+      }
 
       return res.status(200).json(productEdit);
     } catch (e: any) {
@@ -98,8 +132,26 @@ export default class ProductFoodConttroller {
     try {
       const productId = Number(req.params.id);
       const ownerId = Number(req.params.userLoggedId);
-      const deletedUser = await ProductFoodService.delete(productId, ownerId);
-      return res.status(200).json(deletedUser);
+      const productFood = await ProductFoodService.delete(productId, ownerId);
+      return res.status(200).json(productFood);
+    } catch (e: any) {
+      console.log(e);
+      return res.status(401).json({ err: e.message });
+    }
+  }
+
+  async delete_complement_by_id(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    try {
+      const productId = Number(req.params.id);
+      const ownerId = Number(req.params.userLoggedId);
+      const complement = await ProductFoodPlusService.delete_plus_in_food(
+        productId,
+        ownerId
+      );
+      return res.status(200).json(complement);
     } catch (e: any) {
       console.log(e);
       return res.status(401).json({ err: e.message });

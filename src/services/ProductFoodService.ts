@@ -2,7 +2,9 @@
 
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductFoodModel } from "../database/models/ProductFoodModel";
+import { ProductFoodPlusModel } from "../database/models/ProductFoodPlusModel ";
 import { StoreModel } from "../database/models/StoreModel";
+import ProductFoodPlusService from "./ProductFoodPlusService";
 
 class ProductFoodService {
   async index(id: number) {
@@ -17,7 +19,6 @@ class ProductFoodService {
         {
           model: ProductCategoryModel,
           as: "category",
-          attributes: ["category"],
         },
       ],
     });
@@ -36,7 +37,6 @@ class ProductFoodService {
         {
           model: ProductCategoryModel,
           as: "category",
-          attributes: ["category"],
         },
         {
           model: StoreModel,
@@ -52,20 +52,25 @@ class ProductFoodService {
 
   async show(id: number): Promise<any> {
     //Implentar;
-    return await ProductFoodModel.findByPk(id, {
+    const productFood = await ProductFoodModel.findByPk(id, {
       include: [
         {
           model: StoreModel,
           as: "store", // <---- HERE,
-          attributes: ["id", "companyName", "fantasyName"],
+          attributes: ["id", "companyName", "fantasyName", "ownerId"],
         },
         {
           model: ProductCategoryModel,
           as: "category",
-          attributes: ["category"],
         },
       ],
     });
+
+    const productFoodComplements = await ProductFoodPlusModel.findAll({
+      where: { productId: id },
+    });
+
+    return { productFood, productFoodComplements };
   }
 
   async create(product: any, ownerId: number): Promise<any> {
@@ -111,7 +116,14 @@ class ProductFoodService {
     if (!product) throw new Error("Produto Não existe");
     if (product.store.ownerId !== ownerId)
       throw new Error("Você não tem permisão para deletar esse produto");
-    product.destroy();
+
+    const complements = await ProductFoodPlusService.index_by_product_id(
+      product.id
+    );
+    for (const complement of complements) {
+      await complement.destroy();
+    }
+    await product.destroy();
     return true;
   }
 }

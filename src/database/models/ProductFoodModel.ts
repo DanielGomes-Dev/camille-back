@@ -6,16 +6,20 @@ import { StoreModel } from "./StoreModel";
 const dbConnect = new DatabaseConnect().dbConnect;
 
 export class ProductFoodModel extends Model {
-  private id!: number;
-  private name!: string;
-  private description!: string;
-  private code!: string;
-  private photo!: string;
-  private price!: number;
-  private active!: boolean;
-  private saleOff!: boolean;
-  private categoryProductId!: number;
-  private storeId!: number;
+  private _id!: number;
+  private _name!: string;
+  private _description!: string;
+  private _code!: string;
+  private _photo!: string;
+  private _price!: number;
+  private _active!: boolean;
+  private _saleOff!: boolean;
+  private _categoryProductId!: number;
+  private _storeId!: number;
+
+  get id(): number {
+    return this._id;
+  }
 }
 
 ProductFoodModel.init(
