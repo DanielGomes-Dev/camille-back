@@ -1,6 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { ProductCategoryModel } from "./ProductCategoryModel";
+import { ProductColorModel } from "./ProductColorModel";
 import { StoreModel } from "./StoreModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
@@ -48,4 +49,14 @@ ProductModel.belongsTo(StoreModel, {
   foreignKey: "storeId",
   as: "store",
 });
+
+ProductModel.hasMany(ProductColorModel, {
+  foreignKey: "productId",
+  as: "colors",
+});
+
+// ProductColorModel.belongsTo(ProductModel, {
+//   foreignKey: "productId",
+//   as: "colors",
+// });
 // Lesson.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });

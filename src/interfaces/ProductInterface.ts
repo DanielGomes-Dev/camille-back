@@ -9,7 +9,8 @@ interface ProductInterface {
   active: boolean;
   saleOff: boolean;
   categoryProductId: number;
-  storeId: number;
+  storeId?: number;
+  colors: any[];
 }
 
 export default ProductInterface;

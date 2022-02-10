@@ -1,5 +1,7 @@
 import multer from "multer";
 import { MASNameResolver, MulterAzureStorage } from "multer-azure-blob-storage";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require("dotenv").config();
 
 const resolveBlobName: MASNameResolver = (): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
@@ -7,25 +9,12 @@ const resolveBlobName: MASNameResolver = (): Promise<string> => {
     resolve(blobName);
   });
 };
-// const azureStorage: MulterAzureStorage = new MulterAzureStorage({
-//   connectionString:
-//     "DefaultEndpointsProtocol=https;AccountName=camilleimgstorage;AccountKey=bBoriiKVWOIEuOG3o4xqU2il3tg7rEWJDE6TcXVljyP7E5a6lzfWdCDPnMfnEkDsEuZUWcqujKlZV0UK4h3Erg==;EndpointSuffix=core.windows.net",
-//   accessKey:
-//     "bBoriiKVWOIEuOG3o4xqU2il3tg7rEWJDE6TcXVljyP7E5a6lzfWdCDPnMfnEkDsEuZUWcqujKlZV0UK4h3Erg==",
-//   accountName: "camilleimgstorage",
-//   containerName: "camilleimages",
-//   containerAccessLevel: "blob",
-//   urlExpirationTime: 0,
-//   blobName: resolveBlobName,
-// });
 
 const azureStorage: MulterAzureStorage = new MulterAzureStorage({
-  connectionString:
-    "DefaultEndpointsProtocol=https;AccountName=weupstorage;AccountKey=Psb/IcihJyNno2iLUWttai/9ujP2R5SNzOo6KPGYrlHBCVv8dbPxfvbhIX+igk2gIxL/GKVFaoK766+xmjdUYw==;EndpointSuffix=core.windows.net",
-  accessKey:
-    "Psb/IcihJyNno2iLUWttai/9ujP2R5SNzOo6KPGYrlHBCVv8dbPxfvbhIX+igk2gIxL/GKVFaoK766+xmjdUYw==",
-  accountName: "weupstorage",
-  containerName: "weupstoragecontainer",
+  connectionString: process.env.AZURE_CONNECTION_STRING,
+  accessKey: process.env.AZURE_ACCESS_KEY,
+  accountName: process.env.AZURE_ACCOUNT_NAME,
+  containerName: process.env.AZURE_CONTAINER_NAME || "containerName",
   containerAccessLevel: "blob",
   urlExpirationTime: 0,
   blobName: resolveBlobName,

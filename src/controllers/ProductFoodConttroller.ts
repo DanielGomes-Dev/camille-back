@@ -108,7 +108,6 @@ export default class ProductFoodConttroller {
         categoryProductId: productJson.categoryProductId,
       };
       const ownerId = Number(req.params.userLoggedId);
-      console.log(productJson);
       const productEdit = await ProductFoodService.edit(product, ownerId);
 
       for (const complemets of productJson.complements) {
