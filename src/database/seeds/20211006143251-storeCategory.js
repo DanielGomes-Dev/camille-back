@@ -6,6 +6,27 @@ module.exports = {
       "storeCategory",
       [
         {
+          category: "Super Mercado",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Farmácia",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Comida",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
           category: "Tecnologia",
           iconUrl:
             "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",

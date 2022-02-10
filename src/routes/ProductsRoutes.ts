@@ -1,4 +1,5 @@
 import { Router } from "express";
+import ProductColorController from "../controllers/ProductColorConttroller";
 import ProductController from "../controllers/ProductConttroller";
 import authVerify from "../middleware/authVerify";
 import uploadAzure from "../uploadAzure";
@@ -9,7 +10,8 @@ export default class ProductsRouter {
   authVerify = new authVerify();
   constructor(
     private router: Router,
-    private productController: ProductController
+    private productController: ProductController,
+    private productColorController: ProductColorController
   ) {
     this.router.get("/products/:id", productController.index_by_store_id);
     this.router.post(
@@ -41,10 +43,23 @@ export default class ProductsRouter {
       uploadAzure.single("photo"),
       productController.edit
     );
+
+    this.router.put(
+      "/productcolor",
+      this.authVerify.getUserByJwtToken,
+      productColorController.edit
+    );
+
     this.router.delete(
       "/product/:id",
       this.authVerify.getUserByJwtToken,
       productController.delete
+    );
+
+    this.router.delete(
+      "/productcolor/:id",
+      this.authVerify.getUserByJwtToken,
+      productColorController.delete
     );
   }
 }

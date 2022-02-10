@@ -53,7 +53,7 @@ export default class ProductFoodConttroller {
       name: product.name,
       description: product.description,
       code: product.code,
-      photo: img.url,
+      photo: img?.url.split("?")[0],
       price: product.price,
       active: true,
       saleOff: product.saleOff,
@@ -101,14 +101,13 @@ export default class ProductFoodConttroller {
         name: productJson.name,
         description: productJson.description,
         code: productJson.code,
-        photo: img?.url,
+        photo: img?.url.split("?")[0],
         price: productJson.price,
         active: productJson.active,
         saleOff: productJson.saleOff,
         categoryProductId: productJson.categoryProductId,
       };
       const ownerId = Number(req.params.userLoggedId);
-      console.log(productJson);
       const productEdit = await ProductFoodService.edit(product, ownerId);
 
       for (const complemets of productJson.complements) {

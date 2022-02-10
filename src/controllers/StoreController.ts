@@ -42,8 +42,8 @@ export default class StoreController implements ControllerInterface {
 
     const store = {
       email: storeBody.email,
-      photo: img["photo"] ? img["photo"][0].url : undefined,
-      banner: img["banner"] ? img["banner"][0].url : undefined,
+      photo: img["photo"] ? img["photo"][0].url.split("?")[0] : undefined,
+      banner: img["banner"] ? img["banner"][0].url.split("?")[0] : undefined,
       companyName: storeBody.companyName,
       fantasyName: storeBody.fantasyName,
       CNPJ: storeBody.CNPJ,

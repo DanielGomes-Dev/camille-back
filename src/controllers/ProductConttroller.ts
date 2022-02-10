@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import ProductInterface from "../interfaces/ProductInterface";
+import ProductColorService from "../services/ProductColorService";
 import ProductService from "../services/ProductService";
 
 export default class ProductController {
@@ -39,18 +40,22 @@ export default class ProductController {
       name: product.name,
       description: product.description,
       code: product.code,
-      photo: img?.url,
+      photo: img?.url.split("?")[0],
       stock: product.stock,
       price: product.price,
       active: true,
       saleOff: product.saleOff,
       categoryProductId: product.categoryProductId,
       storeId: 0,
+      colors: product.colors,
     };
     const ownerId = Number(req.params.userLoggedId);
 
     try {
       const newProduct = await ProductService.create(productPayload, ownerId);
+      for (const color of productPayload.colors) {
+        await ProductColorService.create(color, newProduct.id);
+      }
       return res.status(201).json(newProduct);
     } catch (err: any) {
       console.log(err);
@@ -72,21 +77,27 @@ export default class ProductController {
       const productJson = JSON.parse(req.body.product);
       console.log(productJson);
       const img: any = req.file;
-      const product: any = {
+      const product: ProductInterface = {
         id: productJson.id,
         name: productJson.name,
         description: productJson.description,
         code: productJson.code,
-        photo: img?.url,
+        photo: img?.url.split("?")[0],
         stock: productJson.stock,
         price: productJson.price,
         active: productJson.active,
         saleOff: productJson.saleOff,
         categoryProductId: productJson.categoryProductId,
+        colors: productJson.colors,
       };
       const ownerId = Number(req.params.userLoggedId);
       const productEdit = await ProductService.edit(product, ownerId);
 
+      for (const color of product.colors) {
+        if (!color.id) {
+          await ProductColorService.create(color, Number(product.id));
+        }
+      }
       return res.status(200).json(productEdit);
     } catch (e: any) {
       console.log(e);

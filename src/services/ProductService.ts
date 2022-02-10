@@ -1,4 +1,5 @@
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
+import { ProductColorModel } from "../database/models/ProductColorModel";
 import { ProductModel } from "../database/models/ProductModel";
 import { StoreModel } from "../database/models/StoreModel";
 
@@ -15,6 +16,10 @@ class ProductService {
         {
           model: ProductCategoryModel,
           as: "category",
+        },
+        {
+          model: ProductColorModel,
+          as: "colors",
         },
       ],
     });
@@ -38,6 +43,10 @@ class ProductService {
           model: StoreModel,
           as: "store", // <---- HERE,
         },
+        {
+          model: ProductColorModel,
+          as: "colors",
+        },
       ],
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
@@ -53,12 +62,16 @@ class ProductService {
         {
           model: StoreModel,
           as: "store", // <---- HERE,
-          attributes: ["id", "companyName", "fantasyName"],
+          attributes: ["id", "companyName", "fantasyName", "ownerId"],
         },
         {
           model: ProductCategoryModel,
           as: "category",
           attributes: ["category"],
+        },
+        {
+          model: ProductColorModel,
+          as: "colors",
         },
       ],
     });
@@ -102,11 +115,18 @@ class ProductService {
           as: "store", // <---- HERE,
           attributes: ["ownerId"],
         },
+        {
+          model: ProductColorModel,
+          as: "colors",
+        },
       ],
     });
     if (!product) throw new Error("Produto Não existe");
     if (product.store.ownerId !== ownerId)
       throw new Error("Você não tem permisão para deletar esse produto");
+    for (const color of product.colors) {
+      (await ProductColorModel.findByPk(color.id))?.destroy();
+    }
     product.destroy();
     return true;
   }
