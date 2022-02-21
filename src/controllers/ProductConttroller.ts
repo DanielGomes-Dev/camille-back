@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import ProductInterface from "../interfaces/ProductInterface";
 import ProductColorService from "../services/ProductColorService";
 import ProductService from "../services/ProductService";
+import ProductToCategoryService from "../services/ProductToCategoryService";
 
 export default class ProductController {
   index(req: Request, res: Response): Promise<Response> {
@@ -16,7 +17,6 @@ export default class ProductController {
   async index_by_token(req: Request, res: Response): Promise<Response> {
     try {
       const userId = Number(req.params.userLoggedId);
-      console.log(userId);
       const productListByStoreAndOwner = await ProductService.index_by_token(
         userId
       );
@@ -41,13 +41,15 @@ export default class ProductController {
       description: product.description,
       code: product.code,
       photo: img?.url.split("?")[0],
+      size: product.size,
+      weight: product.weight,
       stock: product.stock,
       price: product.price,
       active: true,
       saleOff: product.saleOff,
-      categoryProductId: product.categoryProductId,
       storeId: 0,
       colors: product.colors,
+      categorys: product.categorys,
     };
     const ownerId = Number(req.params.userLoggedId);
 
@@ -56,6 +58,12 @@ export default class ProductController {
       for (const color of productPayload.colors) {
         await ProductColorService.create(color, newProduct.id);
       }
+      if (product.categorys.length) {
+        for (const category of productPayload.categorys) {
+          await ProductToCategoryService.create(category.id, newProduct.id);
+        }
+      }
+
       return res.status(201).json(newProduct);
     } catch (err: any) {
       console.log(err);
@@ -75,7 +83,6 @@ export default class ProductController {
   async edit(req: Request, res: Response): Promise<Response> {
     try {
       const productJson = JSON.parse(req.body.product);
-      console.log(productJson);
       const img: any = req.file;
       const product: ProductInterface = {
         id: productJson.id,
@@ -85,10 +92,12 @@ export default class ProductController {
         photo: img?.url.split("?")[0],
         stock: productJson.stock,
         price: productJson.price,
+        size: productJson.size,
+        weight: productJson.weight,
         active: productJson.active,
         saleOff: productJson.saleOff,
-        categoryProductId: productJson.categoryProductId,
         colors: productJson.colors,
+        categorys: productJson.categorys,
       };
       const ownerId = Number(req.params.userLoggedId);
       const productEdit = await ProductService.edit(product, ownerId);
@@ -98,6 +107,16 @@ export default class ProductController {
           await ProductColorService.create(color, Number(product.id));
         }
       }
+
+      if (product.categorys.length) {
+        for (const category of product.categorys) {
+          await ProductToCategoryService.create(
+            Number(category.id),
+            Number(product.id)
+          );
+        }
+      }
+
       return res.status(200).json(productEdit);
     } catch (e: any) {
       console.log(e);
@@ -108,6 +127,7 @@ export default class ProductController {
   async delete(req: Request, res: Response): Promise<Response> {
     try {
       const productId = Number(req.params.id);
+
       const ownerId = Number(req.params.userLoggedId);
       const deletedUser = await ProductService.delete(productId, ownerId);
       return res.status(200).json(deletedUser);

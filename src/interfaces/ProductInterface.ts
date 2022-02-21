@@ -4,13 +4,15 @@ interface ProductInterface {
   name: string;
   code: string;
   photo: string;
+  size: string;
+  weight: string;
   stock: number;
   price: number;
   active: boolean;
   saleOff: boolean;
-  categoryProductId: number;
   storeId?: number;
   colors: any[];
+  categorys: any[];
 }
 
 export default ProductInterface;
