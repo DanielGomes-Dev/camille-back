@@ -13,6 +13,7 @@ import ProductController from "./controllers/ProductConttroller";
 import RequestRouter from "./routes/RequestRoute";
 import RequestController from "./controllers/RequestController";
 import UserSellerRoutes from "./routes/UserSellerRoutes";
+import CheckoutTransparentMercadoPago from "./routes/CheckoutTransparentMercadoPago";
 import UserSellerController from "./controllers/UserSellerController";
 import StoreCategoryRouter from "./routes/StoreCategoryRoutes";
 import StoreCategoryController from "./controllers/StoreCategoryController";
@@ -24,6 +25,7 @@ import TypeProductRouter from "./routes/TypeProductRoutes";
 import TypeProductController from "./controllers/TypeProductController";
 import ProductColorController from "./controllers/ProductColorController";
 import ProductToCategoryController from "./controllers/ProductToCategoryController";
+import CheckoutTransparentMercadoPagoController from "./controllers/CheckoutTransparentMercadoPagoController";
 
 class Server {
   private app: express.Application;
@@ -42,8 +44,13 @@ class Server {
   public routes(): void {
     new UserBuyerRoutes(this.app, new UserBuyerController());
     new UserSellerRoutes(this.app, new UserSellerController());
+    new CheckoutTransparentMercadoPago(
+      this.app,
+      new CheckoutTransparentMercadoPagoController()
+    );
     new StoreRouter(this.app, new StoreController());
     new StoreRouter(this.app, new StoreController());
+
     // new StoreProductCategoryRouter(
     //   this.app,
     //   new StoreProductCategoryController()
