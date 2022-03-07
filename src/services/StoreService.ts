@@ -13,6 +13,14 @@ class StoreService implements ServiceInterface {
           as: "category", // <---- HERE,
           attributes: ["id", "category"],
         },
+        {
+          model: AddressModel,
+          as: "address", // <---- HERE,
+        },
+        {
+          model: ContactModel,
+          as: "contact", // <---- HERE,
+        },
       ],
     });
   }
@@ -24,6 +32,14 @@ class StoreService implements ServiceInterface {
           model: StoreCategoryModel,
           as: "category", // <---- HERE,
           attributes: ["id", "category"],
+        },
+        {
+          model: AddressModel,
+          as: "address", // <---- HERE,
+        },
+        {
+          model: ContactModel,
+          as: "contact", // <---- HERE,
         },
       ],
     });

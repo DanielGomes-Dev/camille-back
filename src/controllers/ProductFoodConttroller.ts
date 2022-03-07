@@ -61,7 +61,6 @@ export default class ProductFoodConttroller {
       storeId: 0,
     };
     const ownerId = Number(req.params.userLoggedId);
-    console.log(productPayload);
     try {
       const newProduct = await ProductFoodService.create(
         productPayload,

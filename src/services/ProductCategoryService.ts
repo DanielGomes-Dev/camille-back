@@ -11,6 +11,11 @@ class ProductCategoryService implements ServiceInterface {
           model: TypeProductModel,
           as: "type",
         },
+        // {
+        //   model: ProductModel,
+        //   as: "product",
+        //   through: { attributes: [] },
+        // },
       ],
     });
   }

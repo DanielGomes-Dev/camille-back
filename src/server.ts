@@ -22,7 +22,8 @@ import ProductCategoryRouter from "./routes/ProductCategoryRoutes";
 import ProductCategoryController from "./controllers/ProductCategoryController";
 import TypeProductRouter from "./routes/TypeProductRoutes";
 import TypeProductController from "./controllers/TypeProductController";
-import ProductColorController from "./controllers/ProductColorConttroller";
+import ProductColorController from "./controllers/ProductColorController";
+import ProductToCategoryController from "./controllers/ProductToCategoryController";
 
 class Server {
   private app: express.Application;
@@ -50,7 +51,8 @@ class Server {
     new ProductsRouter(
       this.app,
       new ProductController(),
-      new ProductColorController()
+      new ProductColorController(),
+      new ProductToCategoryController()
     );
     new RequestRouter(this.app, new RequestController());
     new StoreCategoryRouter(this.app, new StoreCategoryController());

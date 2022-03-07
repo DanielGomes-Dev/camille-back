@@ -15,6 +15,7 @@ export class RequestModel extends Model {
   private _statusId!: number;
   private _productId!: number;
   private _addressId!: number;
+  private _quantity!: number;
 
   get id(): number {
     return this._id;
@@ -29,6 +30,7 @@ RequestModel.init(
     statusId: { type: DataTypes.INTEGER },
     productId: { type: DataTypes.INTEGER },
     addressId: { type: DataTypes.INTEGER },
+    quantity: { type: DataTypes.INTEGER },
   },
   {
     sequelize: dbConnect,

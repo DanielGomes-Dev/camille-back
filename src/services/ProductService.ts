@@ -1,6 +1,7 @@
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductColorModel } from "../database/models/ProductColorModel";
 import { ProductModel } from "../database/models/ProductModel";
+import { ProductToCategoryModel } from "../database/models/ProductToCategoryModel";
 import { StoreModel } from "../database/models/StoreModel";
 
 class ProductService {
@@ -14,12 +15,18 @@ class ProductService {
           attributes: ["id", "companyName", "fantasyName"],
         },
         {
-          model: ProductCategoryModel,
-          as: "category",
-        },
-        {
           model: ProductColorModel,
           as: "colors",
+        },
+        {
+          model: ProductToCategoryModel,
+          as: "categorys",
+          include: [
+            {
+              model: ProductCategoryModel,
+              as: "category", // <---- HERE,
+            },
+          ],
         },
       ],
     });
@@ -36,16 +43,22 @@ class ProductService {
       where: { storeId: storeId.id },
       include: [
         {
-          model: ProductCategoryModel,
-          as: "category",
-        },
-        {
           model: StoreModel,
           as: "store", // <---- HERE,
         },
         {
           model: ProductColorModel,
           as: "colors",
+        },
+        {
+          model: ProductToCategoryModel,
+          as: "categorys",
+          include: [
+            {
+              model: ProductCategoryModel,
+              as: "category", // <---- HERE,
+            },
+          ],
         },
       ],
       order: [
@@ -65,13 +78,18 @@ class ProductService {
           attributes: ["id", "companyName", "fantasyName", "ownerId"],
         },
         {
-          model: ProductCategoryModel,
-          as: "category",
-          attributes: ["category"],
-        },
-        {
           model: ProductColorModel,
           as: "colors",
+        },
+        {
+          model: ProductToCategoryModel,
+          as: "categorys",
+          include: [
+            {
+              model: ProductCategoryModel,
+              as: "category", // <---- HERE,
+            },
+          ],
         },
       ],
     });
@@ -119,6 +137,16 @@ class ProductService {
           model: ProductColorModel,
           as: "colors",
         },
+        {
+          model: ProductToCategoryModel,
+          as: "categorys",
+          include: [
+            {
+              model: ProductCategoryModel,
+              as: "category", // <---- HERE,
+            },
+          ],
+        },
       ],
     });
     if (!product) throw new Error("Produto Não existe");
@@ -126,6 +154,17 @@ class ProductService {
       throw new Error("Você não tem permisão para deletar esse produto");
     for (const color of product.colors) {
       (await ProductColorModel.findByPk(color.id))?.destroy();
+    }
+    console.log(product.categorys);
+    for (const category of product.categorys) {
+      (
+        await ProductToCategoryModel.findOne({
+          where: {
+            productId: category.productId,
+            categoryId: category.categoryId,
+          },
+        })
+      )?.destroy();
     }
     product.destroy();
     return true;
