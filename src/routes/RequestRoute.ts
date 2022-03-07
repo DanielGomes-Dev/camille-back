@@ -1,4 +1,5 @@
 import { Router } from "express";
+import RequestController from "../controllers/RequestController";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import authVerify from "../middleware/authVerify";
 
@@ -8,12 +9,17 @@ export default class RequestRouter {
   authVerify = new authVerify();
   constructor(
     private router: Router,
-    private requestController: ControllerInterface
+    private requestController: RequestController
   ) {
     this.router.get(
-      "/request",
+      "/requestStore",
       this.authVerify.getUserByJwtToken,
       this.requestController.index
+    );
+    this.router.get(
+      "/requestUser",
+      this.authVerify.getUserByJwtToken,
+      this.requestController.indexByUser
     );
     this.router.get(
       "/request/:id",

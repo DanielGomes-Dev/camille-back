@@ -1,12 +1,16 @@
 import { RequestModel } from "../database/models/RequestModel";
 import ServiceInterface from "../interfaces/Project/ServiceInterface";
 import { StoreModel } from "../database/models/StoreModel";
+import { AddressModel } from "../database/models/AdressModel";
+import { ProductModel } from "../database/models/ProductModel";
+import { StatusRequestModel } from "../database/models/StatusRequestModel";
+import { UserBuyerModel } from "../database/models/UserBuyerModel";
 
 class RequestService implements ServiceInterface {
   async index(id: number): Promise<any> {
     const store = await StoreModel.findOne({
       where: {
-        owner: id,
+        ownerId: id,
       },
     });
 
@@ -14,7 +18,78 @@ class RequestService implements ServiceInterface {
       where: {
         storeId: store?.id,
       },
+      include: [
+        {
+          model: AddressModel,
+          as: "address", // <---- HERE,
+        },
+        {
+          model: ProductModel,
+          as: "product", // <---- HERE,
+        },
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+          include: [
+            {
+              model: AddressModel,
+              as: "address", // <---- HERE,
+            },
+          ],
+        },
+        {
+          model: StatusRequestModel,
+          as: "status", // <---- HERE,
+        },
+        {
+          model: UserBuyerModel,
+          as: "user", // <---- HERE,
+        },
+      ],
     });
+
+    console.log(requestsData);
+
+    return requestsData;
+  }
+
+  async indexByUser(id: number): Promise<any> {
+    console.log(id);
+    const requestsData = await RequestModel.findAll({
+      where: {
+        userId: id,
+      },
+      include: [
+        {
+          model: AddressModel,
+          as: "address", // <---- HERE,
+        },
+        {
+          model: ProductModel,
+          as: "product", // <---- HERE,
+        },
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+          include: [
+            {
+              model: AddressModel,
+              as: "address", // <---- HERE,
+            },
+          ],
+        },
+        {
+          model: StatusRequestModel,
+          as: "status", // <---- HERE,
+        },
+        {
+          model: UserBuyerModel,
+          as: "user", // <---- HERE,
+        },
+      ],
+    });
+
+    console.log(requestsData);
 
     return requestsData;
   }
@@ -22,7 +97,7 @@ class RequestService implements ServiceInterface {
   async show(request: any): Promise<any> {
     const store = await StoreModel.findOne({
       where: {
-        owner: request.storeOwnerId,
+        ownerId: request.storeOwnerId,
       },
     });
 
@@ -31,6 +106,34 @@ class RequestService implements ServiceInterface {
         id: request.requestId,
         storeId: store?.id,
       },
+      include: [
+        {
+          model: AddressModel,
+          as: "address", // <---- HERE,
+        },
+        {
+          model: ProductModel,
+          as: "product", // <---- HERE,
+        },
+        {
+          model: StoreModel,
+          as: "store", // <---- HERE,
+          include: [
+            {
+              model: AddressModel,
+              as: "address", // <---- HERE,
+            },
+          ],
+        },
+        {
+          model: StatusRequestModel,
+          as: "status", // <---- HERE,
+        },
+        {
+          model: UserBuyerModel,
+          as: "user", // <---- HERE,
+        },
+      ],
     });
 
     return requestsData;
