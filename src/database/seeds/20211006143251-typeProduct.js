@@ -19,7 +19,7 @@ module.exports = {
         },
         {
           //3
-          type: "Alimentos e Bebidas",
+          type: "Alimentos, Bebidas e Utilitários",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

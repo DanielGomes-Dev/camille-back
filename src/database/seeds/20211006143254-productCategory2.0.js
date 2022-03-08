@@ -221,6 +221,62 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          category: "Bolo",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          typeProduct: 28,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Pizza",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          typeProduct: 28,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Lanches",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          typeProduct: 28,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Espetos",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          typeProduct: 28,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Sorvetes",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          typeProduct: 28,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Açaí",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          typeProduct: 28,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          category: "Bebidas",
+          iconUrl:
+            "https://cdns.iconmonstr.com/wp-content/assets/preview/2016/240/iconmonstr-whatsapp-1.png",
+          typeProduct: 28,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

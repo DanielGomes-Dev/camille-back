@@ -17,6 +17,12 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          //28
+          type: "Comida",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
