@@ -6,6 +6,11 @@ module.exports = {
       "statusRequest",
       [
         {
+          status: "pending-payment",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
           status: "new-request",
           createdAt: new Date(),
           updatedAt: new Date(),
