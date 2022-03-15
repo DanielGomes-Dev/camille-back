@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { request, Request, Response } from "express";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import RequestInterface from "../interfaces/RequestInterface";
 import AddressService from "../services/AddressService";
@@ -42,7 +42,6 @@ export default class RequestController implements ControllerInterface {
     console.log("ok");
     try {
       let addressInfo;
-      console.log(req.params.userLoggedId, " pollllyyy");
 
       if (req.body.address?.id) {
         addressInfo = await AddressService.show(req.body.address.id);
@@ -84,5 +83,75 @@ export default class RequestController implements ControllerInterface {
 
   async delete(req: Request, res: Response): Promise<Response> {
     return res.json({});
+  }
+
+  async acceptNewRequest(req: Request, res: Response): Promise<Response> {
+    try {
+      const requestId = Number(req.params.requestId);
+      const userLogged = Number(req.params.userLoggedId);
+      console.log(requestId);
+      console.log(userLogged);
+
+      const requestAccepted = RequestService.acceptRequest(
+        requestId,
+        userLogged
+      );
+      return res.status(200).json(requestAccepted);
+    } catch (e) {
+      console.log(e);
+      return res.status(401).json({});
+    }
+  }
+
+  async requestSeparet(req: Request, res: Response): Promise<Response> {
+    try {
+      const requestId = Number(req.params.requestId);
+      const userLogged = Number(req.params.userLoggedId);
+      console.log(requestId);
+      console.log(userLogged);
+
+      const requestAccepted = RequestService.requestSeparet(
+        requestId,
+        userLogged
+      );
+      return res.status(200).json(requestAccepted);
+    } catch (e) {
+      console.log(e);
+      return res.status(401).json({});
+    }
+  }
+
+  async deliveringRequest(req: Request, res: Response): Promise<Response> {
+    try {
+      const requestId = Number(req.params.requestId);
+      const userLogged = Number(req.params.userLoggedId);
+      console.log(requestId);
+      console.log(userLogged);
+
+      const requestAccepted = RequestService.deliveringRequest(
+        requestId,
+        userLogged
+      );
+      return res.status(200).json(requestAccepted);
+    } catch (e) {
+      console.log(e);
+      return res.status(401).json({});
+    }
+  }
+
+  async finalizeRequest(req: Request, res: Response): Promise<Response> {
+    try {
+      const requestId = Number(req.params.requestId);
+      const userLogged = Number(req.params.userLoggedId);
+
+      const requestAccepted = RequestService.finalizeRequest(
+        requestId,
+        userLogged
+      );
+      return res.status(200).json(requestAccepted);
+    } catch (e) {
+      console.log(e);
+      return res.status(401).json({});
+    }
   }
 }

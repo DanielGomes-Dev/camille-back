@@ -31,6 +31,26 @@ export default class RequestRouter {
       this.authVerify.getUserByJwtToken,
       this.requestController.create
     );
+    this.router.put(
+      "/requestAccept/:requestId",
+      this.authVerify.getUserByJwtToken,
+      this.requestController.acceptNewRequest
+    );
+    this.router.put(
+      "/requestSeparet/:requestId",
+      this.authVerify.getUserByJwtToken,
+      this.requestController.requestSeparet
+    );
+    this.router.put(
+      "/deliveringRequest/:requestId",
+      this.authVerify.getUserByJwtToken,
+      this.requestController.deliveringRequest
+    );
+    this.router.put(
+      "/finalizeRequest/:requestId",
+      this.authVerify.getUserByJwtToken,
+      this.requestController.finalizeRequest
+    );
     // this.router.put("/user/:id", this.userController.updateUser);
     // this.router.delete("/user/:id", this.userController.deleteUser);
   }

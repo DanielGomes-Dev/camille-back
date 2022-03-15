@@ -5,6 +5,8 @@ import { AddressModel } from "../database/models/AdressModel";
 import { ProductModel } from "../database/models/ProductModel";
 import { StatusRequestModel } from "../database/models/StatusRequestModel";
 import { UserBuyerModel } from "../database/models/UserBuyerModel";
+import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
+import { ProductToCategoryModel } from "../database/models/ProductToCategoryModel";
 
 class RequestService implements ServiceInterface {
   async index(id: number): Promise<any> {
@@ -26,6 +28,18 @@ class RequestService implements ServiceInterface {
         {
           model: ProductModel,
           as: "product", // <---- HERE,
+          include: [
+            {
+              model: ProductToCategoryModel,
+              as: "categorys",
+              include: [
+                {
+                  model: ProductCategoryModel,
+                  as: "category", // <---- HERE,
+                },
+              ],
+            },
+          ],
         },
         {
           model: StoreModel,
@@ -47,8 +61,6 @@ class RequestService implements ServiceInterface {
         },
       ],
     });
-
-    console.log(requestsData);
 
     return requestsData;
   }
@@ -67,6 +79,18 @@ class RequestService implements ServiceInterface {
         {
           model: ProductModel,
           as: "product", // <---- HERE,
+          include: [
+            {
+              model: ProductToCategoryModel,
+              as: "categorys",
+              include: [
+                {
+                  model: ProductCategoryModel,
+                  as: "category", // <---- HERE,
+                },
+              ],
+            },
+          ],
         },
         {
           model: StoreModel,
@@ -88,8 +112,6 @@ class RequestService implements ServiceInterface {
         },
       ],
     });
-
-    console.log(requestsData);
 
     return requestsData;
   }
@@ -151,6 +173,84 @@ class RequestService implements ServiceInterface {
 
   delete(id: number): Promise<any> {
     throw new Error("Method not implemented.");
+  }
+
+  async acceptRequest(requestId: number, userLogged: number) {
+    const storeVerify = await StoreModel.findOne({
+      where: {
+        ownerId: userLogged,
+      },
+    });
+    const request = await RequestModel.findOne({
+      where: {
+        id: requestId,
+        storeId: storeVerify?.id,
+        statusId: 1,
+      },
+    });
+
+    return request?.update({
+      statusId: 2,
+    });
+  }
+
+  async requestSeparet(requestId: number, userLogged: number) {
+    const storeVerify = await StoreModel.findOne({
+      where: {
+        ownerId: userLogged,
+      },
+    });
+    const request = await RequestModel.findOne({
+      where: {
+        id: requestId,
+        storeId: storeVerify?.id,
+        statusId: 2,
+      },
+    });
+
+    console.log(request);
+
+    return request?.update({
+      statusId: 3,
+    });
+  }
+
+  async deliveringRequest(requestId: number, userLogged: number) {
+    const storeVerify = await StoreModel.findOne({
+      where: {
+        ownerId: userLogged,
+      },
+    });
+    const request = await RequestModel.findOne({
+      where: {
+        id: requestId,
+        storeId: storeVerify?.id,
+        statusId: 3,
+      },
+    });
+
+    return request?.update({
+      statusId: 4,
+    });
+  }
+
+  async finalizeRequest(requestId: number, userLogged: number) {
+    const storeVerify = await StoreModel.findOne({
+      where: {
+        ownerId: userLogged,
+      },
+    });
+    const request = await RequestModel.findOne({
+      where: {
+        id: requestId,
+        storeId: storeVerify?.id,
+        statusId: 4,
+      },
+    });
+
+    return request?.update({
+      statusId: 5,
+    });
   }
 }
 
