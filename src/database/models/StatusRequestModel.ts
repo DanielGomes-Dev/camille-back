@@ -4,8 +4,12 @@ import DatabaseConnect from "../config/DatabaseConnect";
 const dbConnect = new DatabaseConnect().dbConnect;
 
 export class StatusRequestModel extends Model {
-  private id!: number;
-  private status!: string;
+  private _id!: number;
+  private _status!: string;
+
+  get id(): number {
+    return this._id;
+  }
 }
 
 StatusRequestModel.init(

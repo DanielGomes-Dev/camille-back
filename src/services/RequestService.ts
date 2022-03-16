@@ -7,6 +7,7 @@ import { StatusRequestModel } from "../database/models/StatusRequestModel";
 import { UserBuyerModel } from "../database/models/UserBuyerModel";
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductToCategoryModel } from "../database/models/ProductToCategoryModel";
+import { ProductFoodModel } from "../database/models/ProductFoodModel";
 
 class RequestService implements ServiceInterface {
   async index(id: number): Promise<any> {
@@ -38,6 +39,16 @@ class RequestService implements ServiceInterface {
                   as: "category", // <---- HERE,
                 },
               ],
+            },
+          ],
+        },
+        {
+          model: ProductFoodModel,
+          as: "productFood", // <---- HERE,
+          include: [
+            {
+              model: ProductCategoryModel,
+              as: "category",
             },
           ],
         },
@@ -75,6 +86,16 @@ class RequestService implements ServiceInterface {
         {
           model: AddressModel,
           as: "address", // <---- HERE,
+        },
+        {
+          model: ProductFoodModel,
+          as: "productFood", // <---- HERE,
+          include: [
+            {
+              model: ProductCategoryModel,
+              as: "category",
+            },
+          ],
         },
         {
           model: ProductModel,
@@ -138,6 +159,16 @@ class RequestService implements ServiceInterface {
           as: "product", // <---- HERE,
         },
         {
+          model: ProductFoodModel,
+          as: "productFood", // <---- HERE,
+          include: [
+            {
+              model: ProductCategoryModel,
+              as: "category",
+            },
+          ],
+        },
+        {
           model: StoreModel,
           as: "store", // <---- HERE,
           include: [
@@ -175,7 +206,18 @@ class RequestService implements ServiceInterface {
     throw new Error("Method not implemented.");
   }
 
-  async acceptRequest(requestId: number, userLogged: number) {
+  async paymentApprove(requestId: number, userLogged: number) {
+    const statusPayment = await StatusRequestModel.findOne({
+      where: {
+        status: "pending-payment",
+      },
+    });
+    const statusNewRequest = await StatusRequestModel.findOne({
+      where: {
+        status: "new-request",
+      },
+    });
+
     const storeVerify = await StoreModel.findOne({
       where: {
         ownerId: userLogged,
@@ -185,16 +227,56 @@ class RequestService implements ServiceInterface {
       where: {
         id: requestId,
         storeId: storeVerify?.id,
-        statusId: 1,
+        statusId: statusPayment?.id,
       },
     });
 
     return request?.update({
-      statusId: 2,
+      statusId: statusNewRequest?.id,
+    });
+  }
+
+  async acceptRequest(requestId: number, userLogged: number) {
+    const statusNewRequest = await StatusRequestModel.findOne({
+      where: {
+        status: "new-request",
+      },
+    });
+    const statusSeparation = await StatusRequestModel.findOne({
+      where: {
+        status: "separation",
+      },
+    });
+    const storeVerify = await StoreModel.findOne({
+      where: {
+        ownerId: userLogged,
+      },
+    });
+    const request = await RequestModel.findOne({
+      where: {
+        id: requestId,
+        storeId: storeVerify?.id,
+        statusId: statusNewRequest?.id,
+      },
+    });
+
+    return request?.update({
+      statusId: statusSeparation?.id,
     });
   }
 
   async requestSeparet(requestId: number, userLogged: number) {
+    const statusSeparation = await StatusRequestModel.findOne({
+      where: {
+        status: "separation",
+      },
+    });
+
+    const statusReadyToDelivery = await StatusRequestModel.findOne({
+      where: {
+        status: "ready-to-delivery",
+      },
+    });
     const storeVerify = await StoreModel.findOne({
       where: {
         ownerId: userLogged,
@@ -204,18 +286,28 @@ class RequestService implements ServiceInterface {
       where: {
         id: requestId,
         storeId: storeVerify?.id,
-        statusId: 2,
+        statusId: statusSeparation?.id,
       },
     });
 
-    console.log(request);
-
     return request?.update({
-      statusId: 3,
+      statusId: statusReadyToDelivery?.id,
     });
   }
 
   async deliveringRequest(requestId: number, userLogged: number) {
+    const statusReadyToDelivery = await StatusRequestModel.findOne({
+      where: {
+        status: "ready-to-delivery",
+      },
+    });
+
+    const statusDelivering = await StatusRequestModel.findOne({
+      where: {
+        status: "delivering",
+      },
+    });
+
     const storeVerify = await StoreModel.findOne({
       where: {
         ownerId: userLogged,
@@ -225,16 +317,28 @@ class RequestService implements ServiceInterface {
       where: {
         id: requestId,
         storeId: storeVerify?.id,
-        statusId: 3,
+        statusId: statusReadyToDelivery?.id,
       },
     });
 
     return request?.update({
-      statusId: 4,
+      statusId: statusDelivering?.id,
     });
   }
 
   async finalizeRequest(requestId: number, userLogged: number) {
+    const statusDelivering = await StatusRequestModel.findOne({
+      where: {
+        status: "delivering",
+      },
+    });
+
+    const statusFinished = await StatusRequestModel.findOne({
+      where: {
+        status: "finished",
+      },
+    });
+
     const storeVerify = await StoreModel.findOne({
       where: {
         ownerId: userLogged,
@@ -244,12 +348,12 @@ class RequestService implements ServiceInterface {
       where: {
         id: requestId,
         storeId: storeVerify?.id,
-        statusId: 4,
+        statusId: statusDelivering?.id,
       },
     });
 
     return request?.update({
-      statusId: 5,
+      statusId: statusFinished?.id,
     });
   }
 }

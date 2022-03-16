@@ -5,6 +5,7 @@ import { StatusRequestModel } from "./StatusRequestModel";
 import { ProductModel } from "./ProductModel";
 import { StoreModel } from "./StoreModel";
 import { UserBuyerModel } from "./UserBuyerModel";
+import { ProductFoodModel } from "./ProductFoodModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
@@ -14,6 +15,7 @@ export class RequestModel extends Model {
   private _userId!: number;
   private _statusId!: number;
   private _productId!: number;
+  private _productFoodId!: number;
   private _addressId!: number;
   private _quantity!: number;
 
@@ -29,6 +31,7 @@ RequestModel.init(
     userId: { type: DataTypes.INTEGER },
     statusId: { type: DataTypes.INTEGER },
     productId: { type: DataTypes.INTEGER },
+    productFoodId: { type: DataTypes.INTEGER },
     addressId: { type: DataTypes.INTEGER },
     quantity: { type: DataTypes.INTEGER },
   },
@@ -55,6 +58,11 @@ RequestModel.belongsTo(StatusRequestModel, {
 RequestModel.belongsTo(ProductModel, {
   foreignKey: "productId",
   as: "product",
+});
+
+RequestModel.belongsTo(ProductFoodModel, {
+  foreignKey: "productFoodId",
+  as: "productFood",
 });
 
 RequestModel.belongsTo(AddressModel, {

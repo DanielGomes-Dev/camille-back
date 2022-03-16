@@ -2,6 +2,7 @@ import { request, Request, Response } from "express";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import RequestInterface from "../interfaces/RequestInterface";
 import AddressService from "../services/AddressService";
+import ProductFoodService from "../services/ProductFoodService";
 import ProductService from "../services/ProductService";
 import RequestService from "../services/RequestService";
 // import { apiErrorHandler } from "../handlers/errorHandler";
@@ -39,8 +40,13 @@ export default class RequestController implements ControllerInterface {
   }
 
   async create(req: Request, res: Response): Promise<Response> {
-    console.log("ok");
     try {
+      if (!req.body.productId && !req.body.productFoodId) {
+        throw new Error("Nenhum produto informado");
+      }
+      if (req.body.productId && req.body.productFoodId) {
+        throw new Error("Forneça apenas um produto");
+      }
       let addressInfo;
 
       if (req.body.address?.id) {
@@ -58,10 +64,22 @@ export default class RequestController implements ControllerInterface {
         addressInfo = await AddressService.create(addressInfoBody);
       }
 
-      const product = await ProductService.show(Number(req.body.productId));
+      let product;
+      console.log(req.body.productFoodId);
+
+      if (req.body.productId)
+        product = await ProductService.show(Number(req.body.productId));
+      if (req.body.productFoodId)
+        product = (
+          await ProductFoodService.show(Number(req.body.productFoodId))
+        ).productFood;
+
+      console.log(product);
+
       const request = {
         addressId: addressInfo.id,
         productId: req.body.productId,
+        productFoodId: req.body.productFoodId,
         userId: Number(req.params.userLoggedId),
         statusId: 1,
         storeId: Number(product.store.id),
@@ -71,9 +89,9 @@ export default class RequestController implements ControllerInterface {
       const newRequest = await RequestService.create(request);
       return res.status(201).json(newRequest);
     } catch (err: any) {
-      console.log(err);
+      console.log(err.message);
       // return res.status(400).json({ err: err.errors[0].message });
-      return res.status(400).json({ err: "erro" });
+      return res.status(400).json({ err: err.message });
     }
   }
 
