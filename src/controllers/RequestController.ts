@@ -1,4 +1,5 @@
-import { request, Request, Response } from "express";
+import { Request, Response } from "express";
+import { StatusRequestModel } from "../database/models/StatusRequestModel";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import RequestInterface from "../interfaces/RequestInterface";
 import AddressService from "../services/AddressService";
@@ -74,14 +75,18 @@ export default class RequestController implements ControllerInterface {
           await ProductFoodService.show(Number(req.body.productFoodId))
         ).productFood;
 
-      console.log(product);
+      const statusNewRequest = await StatusRequestModel.findOne({
+        where: {
+          status: "new-request",
+        },
+      });
 
       const request = {
         addressId: addressInfo.id,
         productId: req.body.productId,
         productFoodId: req.body.productFoodId,
         userId: Number(req.params.userLoggedId),
-        statusId: 1,
+        statusId: statusNewRequest?.id,
         storeId: Number(product.store.id),
         quantity: req.body.quantity,
       };
