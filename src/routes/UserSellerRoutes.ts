@@ -12,13 +12,13 @@ export default class UserSellerRoutes {
   ) {
     this.router.get(
       "/usersSeller",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.userSellerController.index
     );
 
     this.router.post(
       "/userSeller/login",
-      //this.authVerify.getUserByJwtToken,
+      //this.authVerify.getUserSellerByJwtToken,
       this.userSellerController.show
     );
 

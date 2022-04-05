@@ -57,7 +57,7 @@ class UserBuyerService {
       name: userLoged.name,
       typeUser: userLoged.types.type,
     };
-    const authUser = this.jwt.create(userFormated);
+    const authUser = this.jwt.create(userFormated, "Buyer");
     return authUser;
   }
 }

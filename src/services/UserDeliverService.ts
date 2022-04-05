@@ -1,5 +1,5 @@
 import { TypesUserModel } from "../database/models/TypesUserModel";
-import { UserSellerModel } from "../database/models/UserSellerModel";
+import { UserDeliverModel } from "../database/models/UserDeliverModel";
 import jwtGenerate from "../interfaces/JwtInterface";
 import userInterface from "../interfaces/UserInterface";
 import JwtService from "./VerifyJWT";
@@ -9,22 +9,16 @@ interface userLogin {
   password: string;
 }
 
-interface userPayloadInterface {
-  id: number;
-  email: string;
-  name: string;
-  cpf: string;
-}
-
-class UserSellerService {
+//Parei Aqui
+class UserDeliverService {
   async showUserLogged(id: number) {
-    return await UserSellerModel.findByPk(id, {
+    return await UserDeliverModel.findByPk(id, {
       attributes: ["id", "email", "cpf", "name"],
     });
   }
 
   async showUsers() {
-    return await UserSellerModel.findAll({
+    return await UserDeliverModel.findAll({
       attributes: ["id", "email", "cpf", "name"],
     });
   }
@@ -32,11 +26,11 @@ class UserSellerService {
   jwt: JwtService = new JwtService();
 
   async createUser(user: userInterface) {
-    return await UserSellerModel.create(user);
+    return await UserDeliverModel.create(user);
   }
 
   async login(user: userLogin): Promise<any> {
-    const userLoged = await UserSellerModel.findOne({
+    const userLoged = await UserDeliverModel.findOne({
       where: { email: user.email, password: user.password },
       attributes: ["id", "email", "cpf", "name", "typeUserId", "statusId"],
       include: [
@@ -55,9 +49,9 @@ class UserSellerService {
       name: userLoged.name,
       typeUser: userLoged.types.type,
     };
-    const authUser = this.jwt.create(userFormated, "Seller");
+    const authUser = this.jwt.create(userFormated, "Deliver");
     return authUser;
   }
 }
 
-export default new UserSellerService();
+export default new UserDeliverService();

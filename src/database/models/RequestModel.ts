@@ -6,6 +6,7 @@ import { ProductModel } from "./ProductModel";
 import { StoreModel } from "./StoreModel";
 import { UserBuyerModel } from "./UserBuyerModel";
 import { ProductFoodModel } from "./ProductFoodModel";
+import { UserDeliverModel } from "./UserDeliverModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
@@ -17,6 +18,7 @@ export class RequestModel extends Model {
   private _productId!: number;
   private _productFoodId!: number;
   private _addressId!: number;
+  private _deliverId!: number;
   private _quantity!: number;
 
   get id(): number {
@@ -45,9 +47,15 @@ RequestModel.belongsTo(StoreModel, {
   foreignKey: "storeId",
   as: "store",
 });
+
 RequestModel.belongsTo(UserBuyerModel, {
   foreignKey: "userId",
   as: "user",
+});
+
+RequestModel.belongsTo(UserDeliverModel, {
+  foreignKey: "deliverId",
+  as: "userDeliver",
 });
 
 RequestModel.belongsTo(StatusRequestModel, {

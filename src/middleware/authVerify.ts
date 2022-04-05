@@ -10,13 +10,57 @@ interface IUser {
   iat: number;
 }
 class authVerify {
-  getUserByJwtToken(req: Request, res: Response, next: NextFunction): any {
+  getUserBuyerByJwtToken(req: Request, res: Response, next: NextFunction): any {
     try {
       const jwt = new JwtService();
       const token = req.headers.authorization;
       if (!token) return res.status(401).json({ err: "no token provided" });
       const tokenJWT = token.split(" ")[1];
-      const user: IUser = jwt.verify(tokenJWT);
+      const user: IUser = jwt.verify(tokenJWT, "Buyer");
+      //Fazer: Verificar se Usuario existe no banco de dados;
+      if (!user) throw "Usuario não encontrado";
+      req.params.userLoggedId = String(user.id);
+      next();
+      return;
+    } catch (err: any) {
+      console.log(err.message);
+      return res.status(401).json(err);
+    }
+  }
+
+  getUserSellerByJwtToken(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): any {
+    try {
+      const jwt = new JwtService();
+      const token = req.headers.authorization;
+      if (!token) return res.status(401).json({ err: "no token provided" });
+      const tokenJWT = token.split(" ")[1];
+      const user: IUser = jwt.verify(tokenJWT, "Seller");
+      //Fazer: Verificar se Usuario existe no banco de dados;
+      if (!user) throw "Usuario não encontrado";
+      req.params.userLoggedId = String(user.id);
+      next();
+      return;
+    } catch (err: any) {
+      console.log(err.message);
+      return res.status(401).json(err);
+    }
+  }
+
+  getUserDeliverByJwtToken(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): any {
+    try {
+      const jwt = new JwtService();
+      const token = req.headers.authorization;
+      if (!token) return res.status(401).json({ err: "no token provided" });
+      const tokenJWT = token.split(" ")[1];
+      const user: IUser = jwt.verify(tokenJWT, "Deliver");
       //Fazer: Verificar se Usuario existe no banco de dados;
       if (!user) throw "Usuario não encontrado";
       req.params.userLoggedId = String(user.id);

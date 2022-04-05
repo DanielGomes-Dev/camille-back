@@ -23,7 +23,7 @@ export default class ProductsFoodRouter {
 
     this.router.post(
       "/productfood",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       uploadAzure.single("photo"),
       this.productFoodConttroller.create
     );
@@ -41,24 +41,24 @@ export default class ProductsFoodRouter {
     //Buscar Produtos para listagem do dono da loja
     this.router.get(
       "/productsfood",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.productFoodConttroller.index_by_token
     );
     this.router.put(
       "/productsfood",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       uploadAzure.single("photo"),
       this.productFoodConttroller.edit
     );
     this.router.delete(
       "/productsfood/:id",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.productFoodConttroller.delete
     );
 
     this.router.delete(
       "/productsfoodplus/:id",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.productFoodConttroller.delete_complement_by_id
     );
   }

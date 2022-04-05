@@ -137,6 +137,53 @@ class RequestService implements ServiceInterface {
     return requestsData;
   }
 
+  async showReadyToDeliver() {
+    const statusReadyToDelivery = await StatusRequestModel.findOne({
+      where: {
+        status: "ready-to-delivery",
+      },
+    });
+
+    return await RequestModel.findAll({
+      where: {
+        statusId: statusReadyToDelivery?.id,
+      },
+    });
+  }
+
+  async myDeliverysInProgress(userDeliver: number): Promise<RequestModel[]> {
+    const statusDelivering = await StatusRequestModel.findOne({
+      where: {
+        status: "delivering",
+      },
+    });
+    const myDeliverys: RequestModel[] = await RequestModel.findAll({
+      where: {
+        deliverId: userDeliver,
+        statusId: statusDelivering?.id,
+      },
+    });
+
+    return myDeliverys;
+  }
+
+  async myDeliverysFinalized(userDeliver: number): Promise<RequestModel[]> {
+    const statusFinished = await StatusRequestModel.findOne({
+      where: {
+        status: "finished",
+      },
+    });
+
+    const myDeliverys: RequestModel[] = await RequestModel.findAll({
+      where: {
+        deliverId: userDeliver,
+        statusId: statusFinished?.id,
+      },
+    });
+
+    return myDeliverys;
+  }
+
   async show(request: any): Promise<any> {
     const store = await StoreModel.findOne({
       where: {
@@ -308,21 +355,16 @@ class RequestService implements ServiceInterface {
       },
     });
 
-    const storeVerify = await StoreModel.findOne({
-      where: {
-        ownerId: userLogged,
-      },
-    });
     const request = await RequestModel.findOne({
       where: {
         id: requestId,
-        storeId: storeVerify?.id,
         statusId: statusReadyToDelivery?.id,
       },
     });
 
     return request?.update({
       statusId: statusDelivering?.id,
+      deliverId: userLogged,
     });
   }
 

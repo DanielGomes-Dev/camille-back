@@ -1,4 +1,5 @@
 import { Router } from "express";
+import UserBuyerController from "../controllers/UserBuyerController";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import authVerify from "../middleware/authVerify";
 
@@ -8,17 +9,17 @@ export default class UserBuyerRoutes {
   authVerify = new authVerify();
   constructor(
     private router: Router,
-    private userBuyerController: ControllerInterface
+    private userBuyerController: UserBuyerController
   ) {
     this.router.get(
       "/usersBuyer",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserBuyerByJwtToken,
       this.userBuyerController.index
     );
 
     this.router.post(
       "/userBuyer/login",
-      //this.authVerify.getUserByJwtToken,
+      //this.authVerify.getUserBuyerByJwtToken,
       this.userBuyerController.show
     );
 

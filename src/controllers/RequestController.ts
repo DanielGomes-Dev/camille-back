@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { RequestModel } from "../database/models/RequestModel";
 import { StatusRequestModel } from "../database/models/StatusRequestModel";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import RequestInterface from "../interfaces/RequestInterface";
@@ -38,6 +39,23 @@ export default class RequestController implements ControllerInterface {
       requestId,
     });
     return res.json(request);
+  }
+
+  async showReadyToDeliver(req: Request, res: Response): Promise<Response> {
+    const requests: RequestModel[] = await RequestService.showReadyToDeliver();
+    return res.json(requests);
+  }
+
+  async myDeliverysInProgress(req: Request, res: Response): Promise<Response> {
+    const userLogged = Number(req.params.userLoggedId);
+    const myDeliverys = RequestService.myDeliverysInProgress(userLogged);
+    return res.json(myDeliverys);
+  }
+
+  async myDeliverysFinalized(req: Request, res: Response): Promise<Response> {
+    const userLogged = Number(req.params.userLoggedId);
+    const myDeliverys = RequestService.myDeliverysFinalized(userLogged);
+    return res.json(myDeliverys);
   }
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -151,11 +169,11 @@ export default class RequestController implements ControllerInterface {
       console.log(requestId);
       console.log(userLogged);
 
-      const requestAccepted = RequestService.deliveringRequest(
+      const deliveringRequest = RequestService.deliveringRequest(
         requestId,
         userLogged
       );
-      return res.status(200).json(requestAccepted);
+      return res.status(200).json(deliveringRequest);
     } catch (e) {
       console.log(e);
       return res.status(401).json({});

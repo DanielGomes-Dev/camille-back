@@ -11,15 +11,15 @@ interface tokenInterface {
 export default class JwtService {
   private SECRET: any = env.config().parsed?.SECRET;
 
-  create(user: jwtGenerate): tokenInterface {
-    const token = jwt.sign(user, this.SECRET, {
+  create(user: jwtGenerate, type: string): tokenInterface {
+    const token = jwt.sign(user, this.SECRET + type, {
       //expiresIn: 300, // expires in 5min
     });
     return { auth: true, token: token };
   }
-  verify(token: string): any {
+  verify(token: string, type: string): any {
     if (!token) return { auth: false, message: "No token provided." };
-    const decodedToken = jwt.verify(token, this.SECRET);
+    const decodedToken = jwt.verify(token, this.SECRET + type);
     return decodedToken;
   }
 }

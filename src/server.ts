@@ -26,6 +26,8 @@ import TypeProductController from "./controllers/TypeProductController";
 import ProductColorController from "./controllers/ProductColorController";
 import ProductToCategoryController from "./controllers/ProductToCategoryController";
 import CheckoutTransparentMercadoPagoController from "./controllers/CheckoutTransparentMercadoPagoController";
+import UserDeliverRoutes from "./routes/UserDeliverRoutes";
+import UserDeliverController from "./controllers/UserDeliverController";
 
 class Server {
   private app: express.Application;
@@ -44,6 +46,8 @@ class Server {
   public routes(): void {
     new UserBuyerRoutes(this.app, new UserBuyerController());
     new UserSellerRoutes(this.app, new UserSellerController());
+    new UserDeliverRoutes(this.app, new UserDeliverController());
+
     new CheckoutTransparentMercadoPago(
       this.app,
       new CheckoutTransparentMercadoPagoController()

@@ -27,13 +27,13 @@ export default class StoreRouter {
 
     this.router.get(
       "/store",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.storeController.getInformation
     );
     // this.router.get("/user/:id", this.userController.getUser);
     this.router.put(
       "/store",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       uploadAzure.fields([{ name: "photo" }, { name: "banner" }]),
       this.storeController.edit
     );

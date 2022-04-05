@@ -18,7 +18,7 @@ export default class ProductsRouter {
     this.router.get("/products/:id", productController.index_by_store_id);
     this.router.post(
       "/product",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       uploadAzure.single("photo"),
       productController.create
     );
@@ -36,37 +36,37 @@ export default class ProductsRouter {
     //Buscar Produtos para listagem do dono da loja
     this.router.get(
       "/products",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       productController.index_by_token
     );
     this.router.put(
       "/product",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       uploadAzure.single("photo"),
       productController.edit
     );
 
     this.router.put(
       "/productcolor",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       productColorController.edit
     );
 
     this.router.delete(
       "/product/:id",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       productController.delete
     );
 
     this.router.delete(
       "/productcolor/:id",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       productColorController.delete
     );
 
     this.router.delete(
       "/productcategory/:productId/:categoryId",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       productToCategoryController.delete
     );
   }

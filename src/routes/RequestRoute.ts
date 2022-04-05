@@ -13,42 +13,58 @@ export default class RequestRouter {
   ) {
     this.router.get(
       "/requestStore",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.requestController.index
     );
     this.router.get(
       "/requestUser",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserBuyerByJwtToken,
       this.requestController.indexByUser
     );
     this.router.get(
+      "/requestsReadyToDelivery",
+      this.authVerify.getUserDeliverByJwtToken,
+      this.requestController.showReadyToDeliver
+    );
+    this.router.get(
+      "/myDeliverysInProgress",
+      this.authVerify.getUserDeliverByJwtToken,
+      this.requestController.myDeliverysInProgress
+    );
+    this.router.get(
+      "/myDeliverysFinalized",
+      this.authVerify.getUserDeliverByJwtToken,
+      this.requestController.myDeliverysFinalized
+    );
+    this.router.get(
       "/request/:id",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken ||
+        this.authVerify.getUserBuyerByJwtToken,
       this.requestController.show
     );
     this.router.post(
       "/request",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserBuyerByJwtToken,
       this.requestController.create
     );
     this.router.put(
       "/requestAccept/:requestId",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.requestController.acceptNewRequest
     );
     this.router.put(
       "/requestSeparet/:requestId",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserSellerByJwtToken,
       this.requestController.requestSeparet
     );
     this.router.put(
       "/deliveringRequest/:requestId",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserDeliverByJwtToken,
       this.requestController.deliveringRequest
     );
     this.router.put(
       "/finalizeRequest/:requestId",
-      this.authVerify.getUserByJwtToken,
+      this.authVerify.getUserDeliverByJwtToken,
       this.requestController.finalizeRequest
     );
     // this.router.put("/user/:id", this.userController.updateUser);

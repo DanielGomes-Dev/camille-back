@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import AddressService from "../services/AddressService";
 import ContactService from "../services/ContactService";
+import UserDeliverService from "../services/UserDeliverService";
 // import { apiErrorHandler } from "../handlers/errorHandler";
-import UserBuyerService from "../services/UserBuyerService";
 import PassCrypto from "../utils/passCrypto";
-export default class UserBuyerController implements ControllerInterface {
+
+export default class UserDeliverController {
   async index(req: Request, res: Response): Promise<Response> {
-    const users = await UserBuyerService.showUsers();
+    const users = await UserDeliverService.showUsers();
     return res.json(users);
   }
 
@@ -17,7 +17,7 @@ export default class UserBuyerController implements ControllerInterface {
         email: req.body.email,
         password: PassCrypto.encrypt(req.body.password),
       };
-      const user = await UserBuyerService.login(login);
+      const user = await UserDeliverService.login(login);
       if (!user) throw "Login Invalido";
       return res.json(user);
     } catch (error) {
@@ -39,7 +39,7 @@ export default class UserBuyerController implements ControllerInterface {
         district: null,
         city: null,
         state: null,
-        cep: newUser.cep,
+        cep: null,
       });
 
       const contact = await ContactService.create({
@@ -47,17 +47,23 @@ export default class UserBuyerController implements ControllerInterface {
       });
 
       const newUserPayload = {
+        photo:
+          "https://e7.pngegg.com/pngimages/179/752/png-clipart-food-delivery-courier-service-food-delivery-delivery-man-food-service.png",
         name: newUser.name,
         cpf: newUser.cpf,
         email: newUser.email,
         password: PassCrypto.encrypt(newUser.password),
-        typeUserId: 3,
-        statusId: 1,
+        CNH: newUser.CNH,
+        NCDate: new Date(),
+        typeUserId: 2,
+        statusId: 1, //Fazer: validação de email
         addressId: address.id,
         contactId: contact.id,
       };
 
-      const user = await UserBuyerService.createUser(newUserPayload);
+      console.log(newUserPayload);
+
+      const user = await UserDeliverService.createUser(newUserPayload);
 
       return res.json(user).status(200);
     } catch (error: any) {
