@@ -16,6 +16,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    return;
+    await queryInterface.removeColumn("requests", "deliverId");
   },
 };
