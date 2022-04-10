@@ -14,7 +14,7 @@ export default class NotesRouter {
       this.NotesController.postNotesProduct
     );
     this.router.get(
-      "/productNote",
+      "/productNote/:id",
       this.authVerify.getUserBuyerByJwtToken,
       this.NotesController.getNotesProduct
     );
@@ -24,7 +24,7 @@ export default class NotesRouter {
       this.NotesController.postNotesDeliver
     );
     this.router.get(
-      "/deliverNote",
+      "/deliverNote/:id",
       this.authVerify.getUserBuyerByJwtToken,
       this.NotesController.getNotesDeliver
     );
@@ -34,7 +34,7 @@ export default class NotesRouter {
       this.NotesController.postNotesStore
     );
     this.router.get(
-      "/storeNote",
+      "/storeNote/:id",
       this.authVerify.getUserBuyerByJwtToken,
       this.NotesController.getNotesStore
     );

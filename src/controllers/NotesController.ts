@@ -43,23 +43,32 @@ export default class NotesController {
   }
 
   async getNotesDeliver(req: Request, res: Response): Promise<Response> {
+    const deliverId = req.params.id;
+
     const responseNoteDeliver = await DeliveryNoteModel.findAll({
       where: {
-        usersBuyerId: req.params.userLoggedId,
+        deliverId: deliverId,
       },
     });
     return res.status(200).json(responseNoteDeliver);
   }
 
   async getNotesProduct(req: Request, res: Response): Promise<Response> {
-    const responseNoteProduct = await ProductNoteModel.findAll();
+    const productId = req.params.id;
+    console.log(productId);
+    const responseNoteProduct = await ProductNoteModel.findAll({
+      where: {
+        productId: productId,
+      },
+    });
     return res.status(200).json(responseNoteProduct);
   }
 
   async getNotesStore(req: Request, res: Response): Promise<Response> {
+    const storeId = req.params.id;
     const responseNoteStore = await StoreNoteModel.findAll({
       where: {
-        usersBuyerId: req.params.userLoggedId,
+        storeId: storeId,
       },
     });
     return res.status(200).json(responseNoteStore);
