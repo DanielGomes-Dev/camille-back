@@ -8,6 +8,7 @@ const dbConnect = new DatabaseConnect().dbConnect;
 export class StoreNoteModel extends Model {
   private _id!: number;
   private _note!: number;
+  private _usersBuyerId!: number;
   private _comment!: string;
   private _storeId!: number;
 }
@@ -17,7 +18,7 @@ StoreNoteModel.init(
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     note: { type: DataTypes.INTEGER },
     comment: { type: DataTypes.STRING },
-    userBuyerId: { type: DataTypes.INTEGER },
+    usersBuyerId: { type: DataTypes.INTEGER },
     storeId: { type: DataTypes.INTEGER },
   },
   {
@@ -31,7 +32,7 @@ StoreNoteModel.belongsTo(UserDeliverModel, {
   as: "store",
 });
 
-UserBuyerModel.belongsTo(UserDeliverModel, {
-  foreignKey: "userId",
+StoreNoteModel.belongsTo(UserBuyerModel, {
+  foreignKey: "usersBuyerId",
   as: "user",
 });
