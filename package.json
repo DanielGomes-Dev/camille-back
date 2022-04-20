@@ -42,7 +42,7 @@
         "express": "^4.17.1",
         "jsonwebtoken": "^8.5.1",
         "mercadopago": "^1.5.12",
-        "multer-azure-blob-storage": "^1.1.0",
+        "multer-azure-blob-storage": "^1.0.2",
         "mysql2": "^2.3.3",
         "sequelize": "^6.6.5",
         "sqlite3": "^4.2.0",
