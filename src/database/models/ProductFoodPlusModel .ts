@@ -1,8 +1,8 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
-import { ProductCategoryModel } from "./ProductCategoryModel";
 import { ProductFoodModel } from "./ProductFoodModel";
 import { StoreModel } from "./StoreModel";
+import { TypePlusModel } from "./TypePlusModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
@@ -12,6 +12,8 @@ export class ProductFoodPlusModel extends Model {
   private _price!: number;
   private _productId!: number;
   private _storeId!: number;
+  private _typePlusId!: number;
+
   get id(): number {
     return this._id;
   }
@@ -30,6 +32,7 @@ ProductFoodPlusModel.init(
     price: { type: DataTypes.FLOAT },
     productId: { type: DataTypes.INTEGER },
     storeId: { type: DataTypes.INTEGER },
+    typePlusId: { type: DataTypes.INTEGER },
   },
   {
     sequelize: dbConnect,
@@ -42,8 +45,7 @@ ProductFoodPlusModel.belongsTo(StoreModel, {
   as: "store",
 });
 
-ProductFoodPlusModel.belongsTo(ProductFoodModel, {
-  foreignKey: "productId",
-  as: "product",
+ProductFoodPlusModel.belongsTo(TypePlusModel, {
+  foreignKey: "typePlusId",
+  as: "typePlus",
 });
-// Lesson.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });

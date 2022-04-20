@@ -1,26 +1,35 @@
-///PAREI AQUI e Criar o Service de complementos;
-
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductFoodModel } from "../database/models/ProductFoodModel";
 import { ProductFoodPlusModel } from "../database/models/ProductFoodPlusModel ";
 import { StoreModel } from "../database/models/StoreModel";
+import { TypePlusModel } from "../database/models/TypePlusModel";
 import ProductFoodPlusService from "./ProductFoodPlusService";
 
+const includes = [
+  {
+    model: ProductCategoryModel,
+    as: "category",
+  },
+  {
+    model: StoreModel,
+    as: "store", // <---- HERE,
+  },
+  {
+    model: ProductFoodPlusModel,
+    as: "plus",
+    include: [
+      {
+        model: TypePlusModel,
+        as: "typePlus",
+      },
+    ],
+  },
+];
 class ProductFoodService {
   async index(id: number) {
     return await ProductFoodModel.findAll({
       where: { storeId: id },
-      include: [
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-          attributes: ["id", "companyName", "fantasyName"],
-        },
-        {
-          model: ProductCategoryModel,
-          as: "category",
-        },
-      ],
+      include: includes,
     });
   }
 
@@ -33,16 +42,7 @@ class ProductFoodService {
 
     return await ProductFoodModel.findAll({
       where: { storeId: storeId.id },
-      include: [
-        {
-          model: ProductCategoryModel,
-          as: "category",
-        },
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-        },
-      ],
+      include: includes,
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["createdAt", "DESC"],
@@ -53,24 +53,10 @@ class ProductFoodService {
   async show(id: number): Promise<any> {
     //Implentar;
     const productFood = await ProductFoodModel.findByPk(id, {
-      include: [
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-          attributes: ["id", "companyName", "fantasyName", "ownerId"],
-        },
-        {
-          model: ProductCategoryModel,
-          as: "category",
-        },
-      ],
+      include: includes,
     });
 
-    const productFoodComplements = await ProductFoodPlusModel.findAll({
-      where: { productId: id },
-    });
-
-    return { productFood, productFoodComplements };
+    return productFood;
   }
 
   async create(product: any, ownerId: number): Promise<any> {

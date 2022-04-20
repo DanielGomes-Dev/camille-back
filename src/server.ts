@@ -30,6 +30,8 @@ import UserDeliverRoutes from "./routes/UserDeliverRoutes";
 import UserDeliverController from "./controllers/UserDeliverController";
 import NotesRouter from "./routes/NotesRoutes";
 import NotesController from "./controllers/NotesController";
+import TypePlusController from "./controllers/TypePlusController";
+import TypePlusRouter from "./routes/TypePlusRoutes";
 
 class Server {
   private app: express.Application;
@@ -72,6 +74,8 @@ class Server {
     new ProductsFoodRouter(this.app, new ProductFoodConttroller());
     new ProductCategoryRouter(this.app, new ProductCategoryController());
     new TypeProductRouter(this.app, new TypeProductController());
+    new TypePlusRouter(this.app, new TypePlusController());
+
     new NotesRouter(this.app, new NotesController());
   }
 

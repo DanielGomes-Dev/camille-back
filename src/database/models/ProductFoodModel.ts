@@ -1,6 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { ProductCategoryModel } from "./ProductCategoryModel";
+import { ProductFoodPlusModel } from "./ProductFoodPlusModel ";
 import { StoreModel } from "./StoreModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
@@ -49,4 +50,9 @@ ProductFoodModel.belongsTo(ProductCategoryModel, {
 ProductFoodModel.belongsTo(StoreModel, {
   foreignKey: "storeId",
   as: "store",
+});
+
+ProductFoodModel.hasMany(ProductFoodPlusModel, {
+  foreignKey: "productId",
+  as: "plus",
 });
