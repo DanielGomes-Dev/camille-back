@@ -107,6 +107,8 @@ export default class RequestController implements ControllerInterface {
         statusId: statusNewRequest?.id,
         storeId: Number(product.store.id),
         quantity: req.body.quantity,
+        sizeId: req.body.sizeId,
+        colorId: req.body.colorId,
       };
 
       const newRequest = await RequestService.create(request);

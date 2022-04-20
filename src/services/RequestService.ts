@@ -8,69 +8,81 @@ import { UserBuyerModel } from "../database/models/UserBuyerModel";
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductToCategoryModel } from "../database/models/ProductToCategoryModel";
 import { ProductFoodModel } from "../database/models/ProductFoodModel";
+import { ProductSizeModel } from "../database/models/ProductSizeModel";
+import { ProductColorModel } from "../database/models/ProductColorModel";
 
+const includes = [
+  {
+    model: AddressModel,
+    as: "address", // <---- HERE,
+  },
+  {
+    model: ProductSizeModel,
+    as: "sizeProduct", // <---- HERE,
+  },
+  {
+    model: ProductColorModel,
+    as: "colorProduct", // <---- HERE,
+  },
+  {
+    model: ProductModel,
+    as: "product", // <---- HERE,
+    include: [
+      {
+        model: ProductToCategoryModel,
+        as: "categorys",
+        include: [
+          {
+            model: ProductCategoryModel,
+            as: "category", // <---- HERE,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    model: ProductFoodModel,
+    as: "productFood", // <---- HERE,
+    include: [
+      {
+        model: ProductCategoryModel,
+        as: "category",
+      },
+    ],
+  },
+  {
+    model: StoreModel,
+    as: "store", // <---- HERE,
+    include: [
+      {
+        model: AddressModel,
+        as: "address", // <---- HERE,
+      },
+    ],
+  },
+  {
+    model: StatusRequestModel,
+    as: "status", // <---- HERE,
+  },
+  {
+    model: UserBuyerModel,
+    as: "user", // <---- HERE,
+  },
+];
 class RequestService implements ServiceInterface {
   async index(id: number): Promise<any> {
     const store = await StoreModel.findOne({
       where: {
         ownerId: id,
       },
+      include: includes,
     });
 
     const requestsData = await RequestModel.findAll({
       where: {
         storeId: store?.id,
       },
-      include: [
-        {
-          model: AddressModel,
-          as: "address", // <---- HERE,
-        },
-        {
-          model: ProductModel,
-          as: "product", // <---- HERE,
-          include: [
-            {
-              model: ProductToCategoryModel,
-              as: "categorys",
-              include: [
-                {
-                  model: ProductCategoryModel,
-                  as: "category", // <---- HERE,
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: ProductFoodModel,
-          as: "productFood", // <---- HERE,
-          include: [
-            {
-              model: ProductCategoryModel,
-              as: "category",
-            },
-          ],
-        },
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-          include: [
-            {
-              model: AddressModel,
-              as: "address", // <---- HERE,
-            },
-          ],
-        },
-        {
-          model: StatusRequestModel,
-          as: "status", // <---- HERE,
-        },
-        {
-          model: UserBuyerModel,
-          as: "user", // <---- HERE,
-        },
-      ],
+      include: includes,
     });
 
     return requestsData;
@@ -82,56 +94,7 @@ class RequestService implements ServiceInterface {
       where: {
         userId: id,
       },
-      include: [
-        {
-          model: AddressModel,
-          as: "address", // <---- HERE,
-        },
-        {
-          model: ProductFoodModel,
-          as: "productFood", // <---- HERE,
-          include: [
-            {
-              model: ProductCategoryModel,
-              as: "category",
-            },
-          ],
-        },
-        {
-          model: ProductModel,
-          as: "product", // <---- HERE,
-          include: [
-            {
-              model: ProductToCategoryModel,
-              as: "categorys",
-              include: [
-                {
-                  model: ProductCategoryModel,
-                  as: "category", // <---- HERE,
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-          include: [
-            {
-              model: AddressModel,
-              as: "address", // <---- HERE,
-            },
-          ],
-        },
-        {
-          model: StatusRequestModel,
-          as: "status", // <---- HERE,
-        },
-        {
-          model: UserBuyerModel,
-          as: "user", // <---- HERE,
-        },
-      ],
+      include: includes,
     });
 
     return requestsData;

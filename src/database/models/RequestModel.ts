@@ -7,6 +7,8 @@ import { StoreModel } from "./StoreModel";
 import { UserBuyerModel } from "./UserBuyerModel";
 import { ProductFoodModel } from "./ProductFoodModel";
 import { UserDeliverModel } from "./UserDeliverModel";
+import { ProductSizeModel } from "./ProductSizeModel";
+import { ProductColorModel } from "./ProductColorModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
@@ -20,6 +22,8 @@ export class RequestModel extends Model {
   private _addressId!: number;
   private _deliverId!: number;
   private _quantity!: number;
+  private _sizeId!: number;
+  private _colorId!: number;
 
   get id(): number {
     return this._id;
@@ -36,6 +40,8 @@ RequestModel.init(
     productFoodId: { type: DataTypes.INTEGER },
     addressId: { type: DataTypes.INTEGER },
     quantity: { type: DataTypes.INTEGER },
+    sizeId: { type: DataTypes.INTEGER },
+    colorId: { type: DataTypes.INTEGER },
   },
   {
     sequelize: dbConnect,
@@ -76,4 +82,14 @@ RequestModel.belongsTo(ProductFoodModel, {
 RequestModel.belongsTo(AddressModel, {
   foreignKey: "addressId",
   as: "address",
+});
+
+RequestModel.belongsTo(ProductSizeModel, {
+  foreignKey: "sizeId",
+  as: "sizeProduct",
+});
+
+RequestModel.belongsTo(ProductColorModel, {
+  foreignKey: "colorId",
+  as: "colorProduct",
 });
