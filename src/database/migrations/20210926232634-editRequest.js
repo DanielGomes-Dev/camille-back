@@ -17,7 +17,9 @@ module.exports = {
     });
   },
 
-  down: async () => {
+  down: async (queryInterface) => {
+    await queryInterface.removeColumn("requests", "size");
+
     return;
   },
 };
