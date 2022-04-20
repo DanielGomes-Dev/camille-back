@@ -1,6 +1,7 @@
 import { ProductCategoryModel } from "../database/models/ProductCategoryModel";
 import { ProductColorModel } from "../database/models/ProductColorModel";
 import { ProductModel } from "../database/models/ProductModel";
+import { ProductSizeModel } from "../database/models/ProductSizeModel";
 import { ProductToCategoryModel } from "../database/models/ProductToCategoryModel";
 import { StoreModel } from "../database/models/StoreModel";
 
@@ -17,6 +18,10 @@ class ProductService {
         {
           model: ProductColorModel,
           as: "colors",
+        },
+        {
+          model: ProductSizeModel,
+          as: "sizes",
         },
         {
           model: ProductToCategoryModel,
@@ -38,7 +43,6 @@ class ProductService {
     });
 
     if (!storeId) throw new Error("Nenhum Usuario Encontrado");
-
     return await ProductModel.findAll({
       where: { storeId: storeId.id },
       include: [
@@ -49,6 +53,10 @@ class ProductService {
         {
           model: ProductColorModel,
           as: "colors",
+        },
+        {
+          model: ProductSizeModel,
+          as: "sizes",
         },
         {
           model: ProductToCategoryModel,
@@ -80,6 +88,10 @@ class ProductService {
         {
           model: ProductColorModel,
           as: "colors",
+        },
+        {
+          model: ProductSizeModel,
+          as: "sizes",
         },
         {
           model: ProductToCategoryModel,

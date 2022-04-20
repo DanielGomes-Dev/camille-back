@@ -4,7 +4,6 @@ interface ProductInterface {
   name: string;
   code: string;
   photo: string;
-  size: string;
   weight: string;
   stock: number;
   price: number;
@@ -12,6 +11,7 @@ interface ProductInterface {
   saleOff: boolean;
   storeId?: number;
   colors: any[];
+  sizes: any[];
   categorys: any[];
 }
 

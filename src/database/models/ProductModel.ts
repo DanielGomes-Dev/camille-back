@@ -1,6 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { ProductColorModel } from "./ProductColorModel";
+import { ProductSizeModel } from "./ProductSizeModel";
 import { ProductToCategoryModel } from "./ProductToCategoryModel";
 import { StoreModel } from "./StoreModel";
 
@@ -12,7 +13,6 @@ export class ProductModel extends Model {
   private description!: string;
   private code!: string;
   private photo!: string;
-  private size!: string;
   private weight!: string;
   private stock!: number;
   private price!: number;
@@ -28,7 +28,6 @@ ProductModel.init(
     description: { type: DataTypes.STRING },
     code: { type: DataTypes.STRING },
     photo: { type: DataTypes.STRING },
-    size: { type: DataTypes.STRING },
     weight: { type: DataTypes.STRING },
     stock: { type: DataTypes.INTEGER },
     price: { type: DataTypes.FLOAT },
@@ -50,6 +49,11 @@ ProductModel.belongsTo(StoreModel, {
 ProductModel.hasMany(ProductColorModel, {
   foreignKey: "productId",
   as: "colors",
+});
+
+ProductModel.hasMany(ProductSizeModel, {
+  foreignKey: "productId",
+  as: "sizes",
 });
 
 ProductModel.hasMany(ProductToCategoryModel, {

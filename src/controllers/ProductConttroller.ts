@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import ProductInterface from "../interfaces/ProductInterface";
 import ProductColorService from "../services/ProductColorService";
 import ProductService from "../services/ProductService";
+import ProductSizeService from "../services/ProductSizeService";
 import ProductToCategoryService from "../services/ProductToCategoryService";
 
 export default class ProductController {
@@ -41,14 +42,14 @@ export default class ProductController {
       description: product.description,
       code: product.code,
       photo: img?.url.split("?")[0],
-      size: product.size,
+      sizes: product.sizes || [],
       weight: product.weight,
       stock: product.stock,
       price: product.price,
       active: true,
       saleOff: product.saleOff,
       storeId: 0,
-      colors: product.colors,
+      colors: product.colors || [],
       categorys: product.categorys,
     };
     const ownerId = Number(req.params.userLoggedId);
@@ -57,6 +58,9 @@ export default class ProductController {
       const newProduct = await ProductService.create(productPayload, ownerId);
       for (const color of productPayload.colors) {
         await ProductColorService.create(color, newProduct.id);
+      }
+      for (const size of productPayload.sizes) {
+        await ProductSizeService.create(size, newProduct.id);
       }
       if (product.categorys.length) {
         for (const category of productPayload.categorys) {
@@ -92,11 +96,11 @@ export default class ProductController {
         photo: img?.url.split("?")[0],
         stock: productJson.stock,
         price: productJson.price,
-        size: productJson.size,
+        sizes: productJson.sizes || [],
         weight: productJson.weight,
         active: productJson.active,
         saleOff: productJson.saleOff,
-        colors: productJson.colors,
+        colors: productJson.colors || [],
         categorys: productJson.categorys,
       };
       const ownerId = Number(req.params.userLoggedId);
@@ -105,6 +109,12 @@ export default class ProductController {
       for (const color of product.colors) {
         if (!color.id) {
           await ProductColorService.create(color, Number(product.id));
+        }
+      }
+
+      for (const size of product.sizes) {
+        if (!size.id) {
+          await ProductSizeService.create(size, Number(product.id));
         }
       }
 
