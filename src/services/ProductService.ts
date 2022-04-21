@@ -5,35 +5,35 @@ import { ProductSizeModel } from "../database/models/ProductSizeModel";
 import { ProductToCategoryModel } from "../database/models/ProductToCategoryModel";
 import { StoreModel } from "../database/models/StoreModel";
 
+const includes = [
+  {
+    model: StoreModel,
+    as: "store", // <---- HERE,
+  },
+  {
+    model: ProductColorModel,
+    as: "colors",
+  },
+  {
+    model: ProductSizeModel,
+    as: "sizes",
+  },
+  {
+    model: ProductToCategoryModel,
+    as: "categorys",
+    include: [
+      {
+        model: ProductCategoryModel,
+        as: "category", // <---- HERE,
+      },
+    ],
+  },
+];
 class ProductService {
   async index(id: number) {
     return await ProductModel.findAll({
       where: { storeId: id },
-      include: [
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-          attributes: ["id", "companyName", "fantasyName"],
-        },
-        {
-          model: ProductColorModel,
-          as: "colors",
-        },
-        {
-          model: ProductSizeModel,
-          as: "sizes",
-        },
-        {
-          model: ProductToCategoryModel,
-          as: "categorys",
-          include: [
-            {
-              model: ProductCategoryModel,
-              as: "category", // <---- HERE,
-            },
-          ],
-        },
-      ],
+      include: includes,
     });
   }
 
@@ -45,30 +45,7 @@ class ProductService {
     if (!storeId) throw new Error("Nenhum Usuario Encontrado");
     return await ProductModel.findAll({
       where: { storeId: storeId.id },
-      include: [
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-        },
-        {
-          model: ProductColorModel,
-          as: "colors",
-        },
-        {
-          model: ProductSizeModel,
-          as: "sizes",
-        },
-        {
-          model: ProductToCategoryModel,
-          as: "categorys",
-          include: [
-            {
-              model: ProductCategoryModel,
-              as: "category", // <---- HERE,
-            },
-          ],
-        },
-      ],
+      include: includes,
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters
         ["createdAt", "DESC"],
@@ -79,31 +56,7 @@ class ProductService {
   async show(id: number): Promise<any> {
     //Implentar;
     return await ProductModel.findByPk(id, {
-      include: [
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-          attributes: ["id", "companyName", "fantasyName", "ownerId"],
-        },
-        {
-          model: ProductColorModel,
-          as: "colors",
-        },
-        {
-          model: ProductSizeModel,
-          as: "sizes",
-        },
-        {
-          model: ProductToCategoryModel,
-          as: "categorys",
-          include: [
-            {
-              model: ProductCategoryModel,
-              as: "category", // <---- HERE,
-            },
-          ],
-        },
-      ],
+      include: includes,
     });
   }
 

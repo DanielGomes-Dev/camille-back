@@ -1,6 +1,7 @@
 import { Router } from "express";
 import ProductColorController from "../controllers/ProductColorController";
 import ProductController from "../controllers/ProductConttroller";
+import ProductSizeController from "../controllers/ProductSizeController copy";
 import ProductToCategoryController from "../controllers/ProductToCategoryController";
 import authVerify from "../middleware/authVerify";
 import uploadAzure from "../uploadAzure";
@@ -13,6 +14,8 @@ export default class ProductsRouter {
     private router: Router,
     private productController: ProductController,
     private productColorController: ProductColorController,
+    private productSizeController: ProductSizeController,
+
     private productToCategoryController: ProductToCategoryController
   ) {
     this.router.get("/products/:id", productController.index_by_store_id);
@@ -52,6 +55,12 @@ export default class ProductsRouter {
       productColorController.edit
     );
 
+    this.router.put(
+      "/productsize",
+      this.authVerify.getUserSellerByJwtToken,
+      productSizeController.edit
+    );
+
     this.router.delete(
       "/product/:id",
       this.authVerify.getUserSellerByJwtToken,
@@ -62,6 +71,12 @@ export default class ProductsRouter {
       "/productcolor/:id",
       this.authVerify.getUserSellerByJwtToken,
       productColorController.delete
+    );
+
+    this.router.delete(
+      "/productsize/:id",
+      this.authVerify.getUserSellerByJwtToken,
+      productSizeController.delete
     );
 
     this.router.delete(

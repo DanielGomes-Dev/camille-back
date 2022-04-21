@@ -32,6 +32,7 @@ import NotesRouter from "./routes/NotesRoutes";
 import NotesController from "./controllers/NotesController";
 import TypePlusController from "./controllers/TypePlusController";
 import TypePlusRouter from "./routes/TypePlusRoutes";
+import ProductSizeController from "./controllers/ProductSizeController copy";
 
 class Server {
   private app: express.Application;
@@ -67,6 +68,7 @@ class Server {
       this.app,
       new ProductController(),
       new ProductColorController(),
+      new ProductSizeController(),
       new ProductToCategoryController()
     );
     new RequestRouter(this.app, new RequestController());
