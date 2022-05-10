@@ -9,6 +9,7 @@ import { ProductFoodModel } from "./ProductFoodModel";
 import { UserDeliverModel } from "./UserDeliverModel";
 import { ProductSizeModel } from "./ProductSizeModel";
 import { ProductColorModel } from "./ProductColorModel";
+import { PlusInRequestsModel } from "./PlusInRequestsModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
@@ -92,4 +93,9 @@ RequestModel.belongsTo(ProductSizeModel, {
 RequestModel.belongsTo(ProductColorModel, {
   foreignKey: "colorId",
   as: "colorProduct",
+});
+
+RequestModel.hasMany(PlusInRequestsModel, {
+  foreignKey: "requestId",
+  as: "plus",
 });

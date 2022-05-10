@@ -4,6 +4,7 @@ import { StatusRequestModel } from "../database/models/StatusRequestModel";
 import ControllerInterface from "../interfaces/Project/ControllerInterface";
 import RequestInterface from "../interfaces/RequestInterface";
 import AddressService from "../services/AddressService";
+import PlusInRequestService from "../services/PlusInRequestService";
 import ProductFoodService from "../services/ProductFoodService";
 import ProductService from "../services/ProductService";
 import RequestService from "../services/RequestService";
@@ -88,16 +89,17 @@ export default class RequestController implements ControllerInterface {
 
       if (req.body.productId)
         product = await ProductService.show(Number(req.body.productId));
+
       if (req.body.productFoodId)
-        product = (
-          await ProductFoodService.show(Number(req.body.productFoodId))
-        ).productFood;
+        product = await ProductFoodService.show(Number(req.body.productFoodId));
 
       const statusNewRequest = await StatusRequestModel.findOne({
         where: {
           status: "new-request",
         },
       });
+
+      console.log(product.store.id);
 
       const request = {
         addressId: addressInfo.id,
@@ -112,6 +114,19 @@ export default class RequestController implements ControllerInterface {
       };
 
       const newRequest = await RequestService.create(request);
+      if (req.body.plus && req.body.plus.length > 0) {
+        for (let index = 0; index < req.body.plus.length; index++) {
+          const id = req.body.plus[index];
+          await PlusInRequestService.create(
+            {
+              requestId: newRequest.id,
+              plusId: id,
+            },
+            request.storeId
+          );
+        }
+      }
+
       return res.status(201).json(newRequest);
     } catch (err: any) {
       console.log(err.message);

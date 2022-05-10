@@ -10,6 +10,8 @@ import { ProductToCategoryModel } from "../database/models/ProductToCategoryMode
 import { ProductFoodModel } from "../database/models/ProductFoodModel";
 import { ProductSizeModel } from "../database/models/ProductSizeModel";
 import { ProductColorModel } from "../database/models/ProductColorModel";
+import { PlusInRequestsModel } from "../database/models/PlusInRequestsModel";
+import { ProductFoodPlusModel } from "../database/models/ProductFoodPlusModel ";
 
 const includes = [
   {
@@ -23,6 +25,16 @@ const includes = [
   {
     model: ProductColorModel,
     as: "colorProduct", // <---- HERE,
+  },
+  {
+    model: PlusInRequestsModel,
+    as: "plus",
+    include: [
+      {
+        model: ProductFoodPlusModel,
+        as: "plus",
+      },
+    ],
   },
   {
     model: ProductModel,
@@ -75,7 +87,6 @@ class RequestService implements ServiceInterface {
       where: {
         ownerId: id,
       },
-      include: includes,
     });
 
     const requestsData = await RequestModel.findAll({
@@ -111,6 +122,7 @@ class RequestService implements ServiceInterface {
       where: {
         statusId: statusReadyToDelivery?.id,
       },
+      include: includes,
     });
   }
 
@@ -125,6 +137,7 @@ class RequestService implements ServiceInterface {
         deliverId: userDeliver,
         statusId: statusDelivering?.id,
       },
+      include: includes,
     });
 
     return myDeliverys;
@@ -142,6 +155,7 @@ class RequestService implements ServiceInterface {
         deliverId: userDeliver,
         statusId: statusFinished?.id,
       },
+      include: includes,
     });
 
     return myDeliverys;
@@ -159,44 +173,7 @@ class RequestService implements ServiceInterface {
         id: request.requestId,
         storeId: store?.id,
       },
-      include: [
-        {
-          model: AddressModel,
-          as: "address", // <---- HERE,
-        },
-        {
-          model: ProductModel,
-          as: "product", // <---- HERE,
-        },
-        {
-          model: ProductFoodModel,
-          as: "productFood", // <---- HERE,
-          include: [
-            {
-              model: ProductCategoryModel,
-              as: "category",
-            },
-          ],
-        },
-        {
-          model: StoreModel,
-          as: "store", // <---- HERE,
-          include: [
-            {
-              model: AddressModel,
-              as: "address", // <---- HERE,
-            },
-          ],
-        },
-        {
-          model: StatusRequestModel,
-          as: "status", // <---- HERE,
-        },
-        {
-          model: UserBuyerModel,
-          as: "user", // <---- HERE,
-        },
-      ],
+      include: includes,
     });
 
     return requestsData;
