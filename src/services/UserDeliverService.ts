@@ -1,5 +1,7 @@
 import { TypesUserModel } from "../database/models/TypesUserModel";
 import { UserDeliverModel } from "../database/models/UserDeliverModel";
+import { VehiclesModel } from "../database/models/VehiclesModel";
+import { VehiclesTypeModel } from "../database/models/VehiclesTypeModel";
 import jwtGenerate from "../interfaces/JwtInterface";
 import userInterface from "../interfaces/UserInterface";
 import JwtService from "./VerifyJWT";
@@ -9,17 +11,35 @@ interface userLogin {
   password: string;
 }
 
-//Parei Aqui
+const includes = [
+  {
+    model: TypesUserModel,
+    as: "types", // <---- HERE,
+    attributes: ["id", "type"],
+  },
+  {
+    model: VehiclesModel,
+    as: "vehicle", // <---- HERE,
+    include: [
+      {
+        model: VehiclesTypeModel,
+        as: "vehicleType", // <---- HERE,
+      },
+    ],
+  },
+];
 class UserDeliverService {
   async showUserLogged(id: number) {
     return await UserDeliverModel.findByPk(id, {
-      attributes: ["id", "email", "cpf", "name"],
+      attributes: ["id", "photo", "email", "name", "cpf", "CNH"],
+      include: includes,
     });
   }
 
   async showUsers() {
     return await UserDeliverModel.findAll({
-      attributes: ["id", "email", "cpf", "name"],
+      attributes: ["id", "photo", "name"],
+      include: includes,
     });
   }
 
@@ -33,13 +53,7 @@ class UserDeliverService {
     const userLoged = await UserDeliverModel.findOne({
       where: { email: user.email, password: user.password },
       attributes: ["id", "email", "cpf", "name", "typeUserId", "statusId"],
-      include: [
-        {
-          model: TypesUserModel,
-          as: "types", // <---- HERE,
-          attributes: ["id", "type"],
-        },
-      ],
+      include: includes,
     });
     if (!userLoged) throw "Usuario Não Encontrado";
     const userFormated: jwtGenerate = {

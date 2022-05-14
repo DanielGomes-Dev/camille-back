@@ -33,6 +33,8 @@ import NotesController from "./controllers/NotesController";
 import TypePlusController from "./controllers/TypePlusController";
 import TypePlusRouter from "./routes/TypePlusRoutes";
 import ProductSizeController from "./controllers/ProductSizeController copy";
+import VehicleRouter from "./routes/VehicleRoutes";
+import VehicleController from "./controllers/VehicleController";
 
 class Server {
   private app: express.Application;
@@ -77,6 +79,7 @@ class Server {
     new ProductCategoryRouter(this.app, new ProductCategoryController());
     new TypeProductRouter(this.app, new TypeProductController());
     new TypePlusRouter(this.app, new TypePlusController());
+    new VehicleRouter(this.app, new VehicleController());
 
     new NotesRouter(this.app, new NotesController());
   }

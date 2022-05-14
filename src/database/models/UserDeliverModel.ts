@@ -4,6 +4,7 @@ import { AddressModel } from "./AdressModel";
 import { ContactModel } from "./ContactModel";
 import { StatusUserModel } from "./StatusUserModel";
 import { TypesUserModel } from "./TypesUserModel";
+import { VehiclesModel } from "./VehiclesModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 

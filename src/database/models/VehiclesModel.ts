@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import DatabaseConnect from "../config/DatabaseConnect";
 import { UserDeliverModel } from "./UserDeliverModel";
-import { VehiclesTypeModel } from "./VehiclesTypeModel copy";
+import { VehiclesTypeModel } from "./VehiclesTypeModel";
 
 const dbConnect = new DatabaseConnect().dbConnect;
 
@@ -33,12 +33,12 @@ VehiclesModel.init(
   }
 );
 
-VehiclesModel.belongsTo(UserDeliverModel, {
-  foreignKey: "ownerVehicleId",
-  as: "owner",
-});
-
 VehiclesModel.belongsTo(VehiclesTypeModel, {
   foreignKey: "vehicleTypeId",
   as: "vehicleType",
+});
+
+UserDeliverModel.hasOne(VehiclesModel, {
+  foreignKey: "ownerVehicleId",
+  as: "vehicle",
 });

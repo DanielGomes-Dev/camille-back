@@ -55,7 +55,7 @@ export default class UserDeliverController {
         password: PassCrypto.encrypt(newUser.password),
         CNH: newUser.CNH,
         NCDate: new Date(),
-        typeUserId: 2,
+        typeUserId: 4,
         statusId: 1, //Fazer: validação de email
         addressId: address.id,
         contactId: contact.id,
