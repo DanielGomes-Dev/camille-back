@@ -22,6 +22,8 @@ AddressModel.init(
     city: { type: DataTypes.STRING },
     state: { type: DataTypes.STRING },
     cep: { type: DataTypes.STRING },
+    lat: { type: DataTypes.STRING },
+    long: { type: DataTypes.STRING },
   },
   {
     sequelize: dbConnect,

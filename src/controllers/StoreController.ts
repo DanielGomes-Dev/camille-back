@@ -4,6 +4,9 @@ import AddressService from "../services/AddressService";
 import ContactService from "../services/ContactService";
 import StoreService from "../services/StoreService";
 // import { apiErrorHandler } from "../handlers/errorHandler";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+import fetch from "node-fetch";
+
 export default class StoreController implements ControllerInterface {
   async index(req: Request, res: Response): Promise<Response> {
     const stores = await StoreService.index();
@@ -57,15 +60,24 @@ export default class StoreController implements ControllerInterface {
       number: storeBody.contact.number,
     };
 
-    const address = {
-      number: storeBody.address.number,
-      street: storeBody.address.street,
-      district: storeBody.address.district,
-      city: storeBody.address.city,
-      state: storeBody.address.state,
-      cep: storeBody.address.cep,
-    };
     try {
+      const response = await fetch(
+        `https://cep.awesomeapi.com.br/json/${storeBody.address.cep}`
+      );
+
+      const data = await response.json();
+      console.log(data);
+
+      const address = {
+        number: storeBody.address.number,
+        street: data.address,
+        district: data.district,
+        city: data.city,
+        state: data.state,
+        cep: data.cep,
+        lat: data.lat,
+        long: data.lng,
+      };
       const storeEdit = await StoreService.edit(user, store);
       const addressEdit = await AddressService.edit(
         storeEdit.addressId,

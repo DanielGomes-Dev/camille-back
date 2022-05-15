@@ -1,3 +1,4 @@
+import { AddressModel } from "../database/models/AdressModel";
 import { TypesUserModel } from "../database/models/TypesUserModel";
 import { UserBuyerModel } from "../database/models/UserBuyerModel";
 import jwtGenerate from "../interfaces/JwtInterface";
@@ -20,12 +21,24 @@ class UserBuyerService {
   async showUserLogged(id: number) {
     return await UserBuyerModel.findByPk(id, {
       attributes: ["id", "email", "cpf", "name"],
+      include: [
+        {
+          model: AddressModel,
+          as: "address", // <---- HERE,
+        },
+      ],
     });
   }
 
   async showUsers() {
     return await UserBuyerModel.findAll({
       attributes: ["id", "email", "cpf", "name"],
+      include: [
+        {
+          model: AddressModel,
+          as: "address", // <---- HERE,
+        },
+      ],
     });
   }
 
